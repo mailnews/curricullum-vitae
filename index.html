@@ -1045,9 +1045,14 @@
       box-shadow:0 24px 75px rgba(5,20,39,.34),0 0 28px rgba(199,243,106,.12),inset 0 1px 0 rgba(255,255,255,.08);
     }
     .neon-brand-mark {
-      color:var(--navy);
+      width:42px; height:42px; flex:0 0 42px; padding:3px;
+      display:block; overflow:hidden; border-radius:14px;
       background:linear-gradient(145deg,#D9FF8B,#C7F36A);
       box-shadow:0 0 22px rgba(199,243,106,.30);
+    }
+    .neon-brand-mark img {
+      display:block; width:100%; height:100%; object-fit:cover;
+      object-position:center 34%; border-radius:11px;
     }
     .neon-collapse { background:#17375D; color:#F4F7FB; border-color:rgba(255,255,255,.15); }
     .neon-collapse:hover { color:var(--lime); border-color:var(--lime); box-shadow:0 0 15px rgba(199,243,106,.32); }
@@ -1063,17 +1068,15 @@
     .neon-live-dot { background:var(--lime); box-shadow:0 0 10px var(--lime); }
     .neon-version { color:var(--lime); }
     .neon-mobile-scrim { background:rgba(4,15,29,.22); }
-    main, .topbar, footer {
-      transition:margin-left .38s cubic-bezier(.2,.8,.2,1),padding-left .38s cubic-bezier(.2,.8,.2,1),width .38s cubic-bezier(.2,.8,.2,1);
+    main, footer {
+      transition:margin-left .38s cubic-bezier(.2,.8,.2,1),width .38s cubic-bezier(.2,.8,.2,1);
     }
     /* Sidebar acts like an app rail: content is pushed, never covered. */
     @media (min-width:1101px) {
-      body.neon-expanded main { margin-left:254px; }
-      body.neon-expanded .topbar { padding-left:244px; }
+      body.neon-expanded main { margin-left:254px; width:calc(100% - 278px); }
     }
     @media (min-width:801px) and (max-width:1100px) {
-      body.neon-expanded main { margin-left:230px; }
-      body.neon-expanded .topbar { padding-left:230px; }
+      body.neon-expanded main { margin-left:230px; width:calc(100% - 246px); }
     }
     @media (max-width:800px) {
       body.neon-expanded { overflow-x:hidden; }
@@ -1082,24 +1085,15 @@
         width:calc(100% - min(220px,70vw));
         padding-bottom:25px;
       }
-      body.neon-expanded .topbar {
-        margin-left:min(220px,70vw);
-        width:calc(100% - min(220px,70vw));
-        padding-left:14px;
-      }
-      body.neon-expanded footer {
-        margin-left:min(220px,70vw);
-        width:calc(100% - min(220px,70vw));
-      }
       .neon-sidebar { background:linear-gradient(160deg,#102B4D,#0B1F3A 75%,#07172B); }
     }
-    /* Apply the new palette consistently to buttons, cards and section details. */
+/* Apply the new palette consistently to buttons, cards and section details. */
     .button-dark { background:var(--navy); border-color:var(--navy); color:#fff; }
     .button-dark span { color:var(--lime); }
     .button-accent { background:var(--lime); border-color:var(--lime); color:var(--navy); }
     .button-outline { border-color:var(--navy); color:var(--navy); }
     .dot { background:var(--lime); }
-    .profile-photo-wrap { background:var(--lime); }
+    .profile-photo-wrap { display:none; }
     .hero-card { background:var(--navy); }
     .nav-contact { border-color:var(--lime); }
     @media (prefers-reduced-motion:reduce) {
@@ -1109,20 +1103,9 @@
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <a class="brand-logo-wrap" onclick="switchTab('beranda')" aria-label="Kembali ke beranda">
-      <img class="brand-logo" src="foto-abdul-azis.jpg" alt="Foto Abdul Azis">
-    </a>
-    <div class="topbar-title">
-      <strong>ABDUL AZIS</strong>
-      <span>CURRICULUM VITAE</span>
-    </div>
-    <span class="topbar-status"><i></i> PORTOFOLIO PROFESIONAL</span>
-  </header>
-
-  <aside class="neon-sidebar" id="neonSidebar" aria-label="Navigasi CV">
+<aside class="neon-sidebar" id="neonSidebar" aria-label="Navigasi CV">
     <div class="neon-sidebar-top">
-      <div class="neon-brand"><span class="neon-brand-mark">A</span><span class="neon-brand-name">ABDUL AZIS<small>PORTFOLIO</small></span></div>
+      <div class="neon-brand"><span class="neon-brand-mark"><img src="foto-abdul-azis.jpg" alt="Foto Abdul Azis"></span><span class="neon-brand-name">ABDUL AZIS<small>PORTFOLIO</small></span></div>
       <button class="neon-collapse" type="button" onclick="toggleNeonSidebar()" aria-label="Perluas atau ciutkan sidebar" aria-expanded="false"><span>›</span></button>
     </div>
     <div class="neon-search"><span>⌕</span><span class="neon-search-label">Navigasi CV</span></div>
@@ -1136,9 +1119,7 @@
     </nav>
     <div class="neon-sidebar-bottom"><span class="neon-live-dot"></span><span class="neon-bottom-label">CV ONLINE</span><span class="neon-version">V2.0</span></div>
   </aside>
-  <button class="neon-mobile-scrim" id="neonScrim" aria-label="Tutup menu" onclick="toggleNeonSidebar(false)"></button>
-
-  <main>
+<main>
     <!-- Halaman 1: Beranda & Profil -->
     <div id="beranda" class="page-tab active">
       <section class="hero section">
@@ -1156,9 +1137,6 @@
         </div>
 
         <aside class="hero-card">
-          <div class="profile-photo-wrap">
-            <img class="profile-photo" src="foto-abdul-azis.jpg" alt="Foto profil Abdul Azis">
-          </div>
           <p class="card-label">BIDANG KEAHLIAN</p>
           <h2>Teknik &<br>pemeliharaan</h2>
           <div class="card-line"></div>
@@ -1336,10 +1314,7 @@
   </main>
 
   <footer>
-    <a class="brand-logo-wrap" onclick="switchTab('beranda')">
-      <img class="brand-logo" src="foto-abdul-azis.jpg" alt="Logo Abdul Azis">
-    </a>
-    <p>© <span id="year"></span> Abdul Azis. Curriculum vitae.</p>
+<p>© <span id="year"></span> Abdul Azis. Curriculum vitae.</p>
     <a onclick="switchTab('beranda')" style="cursor: pointer;">Kembali ke awal ↑</a>
   </footer>
 
