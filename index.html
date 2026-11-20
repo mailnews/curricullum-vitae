@@ -1004,6 +1004,108 @@
       }
     }
 
+
+    /* Unified palette: Midnight Navy / Cloud White / Electric Lime */
+    :root {
+      --bg:#F4F7FB;
+      --ink:#0B1F3A;
+      --muted:#53647A;
+      --line:#D9E1EB;
+      --accent:#C7F36A;
+      --white:#FFFFFF;
+      --navy:#0B1F3A;
+      --cloud:#F4F7FB;
+      --lime:#C7F36A;
+    }
+    body { background:var(--cloud); color:var(--navy); overflow-x:hidden; }
+    .topbar {
+      background:rgba(11,31,58,.98);
+      color:#fff;
+      border-bottom:1px solid rgba(199,243,106,.35);
+      box-shadow:0 8px 28px rgba(11,31,58,.12);
+      transition:padding-left .38s cubic-bezier(.2,.8,.2,1),background .3s;
+    }
+    .topbar::after {
+      background:linear-gradient(90deg,transparent,rgba(199,243,106,.85),transparent);
+    }
+    .topbar .brand-logo-wrap {
+      border-color:var(--lime);
+      box-shadow:0 0 0 3px rgba(199,243,106,.13),0 0 18px rgba(199,243,106,.22);
+    }
+    .topbar-title strong { color:#fff; text-shadow:none; }
+    .topbar-title span,.topbar-status { color:#D5DFEC; }
+    .topbar-status i { background:var(--lime); box-shadow:0 0 0 4px rgba(199,243,106,.12),0 0 12px rgba(199,243,106,.55); }
+    .neon-sidebar {
+      --neon:#C7F36A; --neon-bright:#D9FF8B;
+      background:linear-gradient(160deg,#102B4D 0%,#0B1F3A 72%,#07172B 100%);
+      border-color:rgba(255,255,255,.12);
+      box-shadow:0 22px 65px rgba(5,20,39,.28),inset 0 1px 0 rgba(255,255,255,.08);
+    }
+    .neon-sidebar.expanded {
+      box-shadow:0 24px 75px rgba(5,20,39,.34),0 0 28px rgba(199,243,106,.12),inset 0 1px 0 rgba(255,255,255,.08);
+    }
+    .neon-brand-mark {
+      color:var(--navy);
+      background:linear-gradient(145deg,#D9FF8B,#C7F36A);
+      box-shadow:0 0 22px rgba(199,243,106,.30);
+    }
+    .neon-collapse { background:#17375D; color:#F4F7FB; border-color:rgba(255,255,255,.15); }
+    .neon-collapse:hover { color:var(--lime); border-color:var(--lime); box-shadow:0 0 15px rgba(199,243,106,.32); }
+    .neon-search { background:rgba(3,15,29,.32); border-color:rgba(255,255,255,.08); }
+    .neon-link:hover { color:#fff; background:rgba(199,243,106,.09); }
+    .neon-link.active {
+      color:#fff;
+      background:linear-gradient(90deg,rgba(199,243,106,.20),rgba(199,243,106,.035));
+      box-shadow:inset 0 0 22px rgba(199,243,106,.08),0 0 18px rgba(199,243,106,.07);
+    }
+    .neon-link.active .neon-icon { color:var(--lime); filter:drop-shadow(0 0 7px rgba(199,243,106,.7)); }
+    .neon-link.active i { background:var(--lime); box-shadow:0 0 12px rgba(199,243,106,.8); }
+    .neon-live-dot { background:var(--lime); box-shadow:0 0 10px var(--lime); }
+    .neon-version { color:var(--lime); }
+    .neon-mobile-scrim { background:rgba(4,15,29,.22); }
+    main, .topbar, footer {
+      transition:margin-left .38s cubic-bezier(.2,.8,.2,1),padding-left .38s cubic-bezier(.2,.8,.2,1),width .38s cubic-bezier(.2,.8,.2,1);
+    }
+    /* Sidebar acts like an app rail: content is pushed, never covered. */
+    @media (min-width:1101px) {
+      body.neon-expanded main { margin-left:254px; }
+      body.neon-expanded .topbar { padding-left:244px; }
+    }
+    @media (min-width:801px) and (max-width:1100px) {
+      body.neon-expanded main { margin-left:230px; }
+      body.neon-expanded .topbar { padding-left:230px; }
+    }
+    @media (max-width:800px) {
+      body.neon-expanded { overflow-x:hidden; }
+      body.neon-expanded main {
+        margin-left:min(220px,70vw);
+        width:calc(100% - min(220px,70vw));
+        padding-bottom:25px;
+      }
+      body.neon-expanded .topbar {
+        margin-left:min(220px,70vw);
+        width:calc(100% - min(220px,70vw));
+        padding-left:14px;
+      }
+      body.neon-expanded footer {
+        margin-left:min(220px,70vw);
+        width:calc(100% - min(220px,70vw));
+      }
+      .neon-sidebar { background:linear-gradient(160deg,#102B4D,#0B1F3A 75%,#07172B); }
+    }
+    /* Apply the new palette consistently to buttons, cards and section details. */
+    .button-dark { background:var(--navy); border-color:var(--navy); color:#fff; }
+    .button-dark span { color:var(--lime); }
+    .button-accent { background:var(--lime); border-color:var(--lime); color:var(--navy); }
+    .button-outline { border-color:var(--navy); color:var(--navy); }
+    .dot { background:var(--lime); }
+    .profile-photo-wrap { background:var(--lime); }
+    .hero-card { background:var(--navy); }
+    .nav-contact { border-color:var(--lime); }
+    @media (prefers-reduced-motion:reduce) {
+      main,.topbar,footer { transition-duration:.01ms !important; }
+    }
+
   </style>
 </head>
 <body>
@@ -1248,6 +1350,7 @@
       const sidebar=document.getElementById('neonSidebar');
       const expanded=typeof forceState==='boolean'?forceState:!sidebar.classList.contains('expanded');
       sidebar.classList.toggle('expanded',expanded);
+      document.body.classList.toggle('neon-expanded',expanded);
       sidebar.querySelector('.neon-collapse').setAttribute('aria-expanded',String(expanded));
       document.body.classList.toggle('neon-menu-open',expanded && window.matchMedia('(max-width: 800px)').matches);
     }
