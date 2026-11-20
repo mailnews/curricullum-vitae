@@ -1463,6 +1463,44 @@
       .contact { padding:48px 6%; }
     }
 
+ 
+    /* PORTFOLIO SECTION */
+    .portfolio-section .section-heading { max-width:720px; margin-bottom:38px; }
+    .portfolio-intro { color:var(--muted); max-width:540px; margin-top:14px; }
+    .portfolio-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
+    .portfolio-card { min-width:0; padding:22px; border:1px solid var(--line); border-radius:18px; background:var(--white); box-shadow:0 12px 34px rgba(16,35,63,.055); transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease; }
+    .portfolio-card:hover { transform:translateY(-6px); border-color:var(--lime); box-shadow:0 18px 40px rgba(16,35,63,.11); }
+    .portfolio-card-top { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+    .portfolio-number { color:var(--navy); font-size:13px; font-weight:800; }
+    .portfolio-type { color:var(--muted); font-size:9px; font-weight:800; letter-spacing:1.2px; text-align:right; }
+    .portfolio-visual { height:142px; margin:22px 0; border-radius:13px; background:linear-gradient(135deg,#0B1F3A,#183B60); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; color:var(--lime); }
+    .portfolio-visual:before,.portfolio-visual:after { content:""; position:absolute; border:1px solid rgba(199,243,106,.25); border-radius:50%; width:170px; height:170px; }
+    .portfolio-visual:after { width:112px; height:112px; }
+    .portfolio-visual span { font-size:54px; z-index:1; font-weight:300; text-shadow:0 0 24px rgba(199,243,106,.4); }
+    .portfolio-visual i { position:absolute; width:7px; height:7px; border-radius:50%; background:var(--lime); box-shadow:0 0 12px var(--lime); }
+    .portfolio-network i:nth-of-type(1) { top:25%; left:24%; }
+    .portfolio-network i:nth-of-type(2) { bottom:23%; right:25%; }
+    .portfolio-network i:nth-of-type(3) { top:28%; right:22%; }
+    .portfolio-router i:nth-of-type(1) { top:24%; left:25%; }
+    .portfolio-router i:nth-of-type(2) { bottom:24%; right:24%; }
+    .portfolio-router i:nth-of-type(3) { top:22%; right:30%; }
+    .portfolio-device i { width:42px; height:2px; border-radius:2px; top:72%; }
+    .portfolio-card h3 { color:var(--ink); font-size:18px; line-height:1.25; margin:0 0 10px; }
+    .portfolio-card p { color:var(--muted); font-size:13px; line-height:1.75; }
+    .portfolio-tags { display:flex; flex-wrap:wrap; gap:7px; margin-top:18px; }
+    .portfolio-tags span { padding:6px 9px; border-radius:30px; background:#F0F4F8; color:#40536B; font-size:10px; font-weight:700; }
+    .portfolio-note { margin-top:22px; color:var(--muted); font-size:11px; }
+    @media(max-width:900px) { .portfolio-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media(max-width:600px) { .portfolio-grid { grid-template-columns:1fr; gap:14px; } .portfolio-card { padding:18px; } .portfolio-visual { height:125px; margin:16px 0; } }
+    @media(max-width:800px) {
+      .neon-nav { flex-wrap:nowrap; gap:2px; }
+      .neon-link { min-width:0; flex:1 1 0; }
+      .neon-icon { width:auto; flex:0 0 auto; }
+      .neon-sidebar:not(.expanded) { overflow-x:auto; }
+      .neon-sidebar:not(.expanded) .neon-nav { width:100%; }
+      .neon-sidebar:not(.expanded) .neon-link { min-width:0; }
+    }
+
 </style>
 </head>
 <body>
@@ -1478,6 +1516,7 @@
       <a class="neon-link" href="#pengalaman" data-tab="pengalaman" title="Pengalaman" onclick="selectNeonTab('pengalaman');return false;"><span class="neon-icon">▣</span><span class="neon-link-label">Pengalaman</span><i></i></a>
       <a class="neon-link" href="#pendidikan" data-tab="pendidikan" title="Pendidikan" onclick="selectNeonTab('pendidikan');return false;"><span class="neon-icon">⌑</span><span class="neon-link-label">Pendidikan</span><i></i></a>
       <a class="neon-link" href="#keahlian" data-tab="keahlian" title="Keahlian" onclick="selectNeonTab('keahlian');return false;"><span class="neon-icon">⌁</span><span class="neon-link-label">Keahlian</span><i></i></a>
+      <a class="neon-link" href="#portofolio" data-tab="portofolio" title="Portofolio" onclick="selectNeonTab('portofolio');return false;"><span class="neon-icon">▤</span><span class="neon-link-label">Portofolio</span><i></i></a>
       <a class="neon-link" href="#kontak" data-tab="kontak" title="Kontak" onclick="selectNeonTab('kontak');return false;"><span class="neon-icon">✉</span><span class="neon-link-label">Kontak</span><i></i></a>
     </nav>
     <div class="neon-sidebar-bottom"><span class="neon-live-dot"></span><span class="neon-bottom-label">CV ONLINE</span><span class="neon-version">V2.0</span></div>
@@ -1640,7 +1679,42 @@
       </section>
     </div>
 
-    <!-- Halaman 5: Kontak & Sosial Media -->
+    <!-- Halaman 5: Portofolio & bidang pekerjaan -->
+    <div id="portofolio" class="page-tab">
+      <section class="section portfolio-section">
+        <div class="section-heading">
+          <p class="eyebrow">05 / PORTOFOLIO</p>
+          <h2>Bidang <span>pekerjaan.</span></h2>
+          <p class="portfolio-intro">Rangkuman pekerjaan teknis dan kompetensi yang pernah saya tangani.</p>
+        </div>
+        <div class="portfolio-grid">
+          <article class="portfolio-card">
+            <div class="portfolio-card-top"><span class="portfolio-number">01</span><span class="portfolio-type">TELEKOMUNIKASI</span></div>
+            <div class="portfolio-visual portfolio-network" aria-hidden="true"><span>◎</span><i></i><i></i><i></i></div>
+            <h3>Instalasi jaringan internet</h3>
+            <p>Penarikan jalur kabel antar tiang, instalasi sambungan pelanggan baru, serta pengelolaan area layanan jaringan.</p>
+            <div class="portfolio-tags"><span>Instalasi</span><span>Jaringan</span><span>FTTH</span></div>
+          </article>
+          <article class="portfolio-card">
+            <div class="portfolio-card-top"><span class="portfolio-number">02</span><span class="portfolio-type">NETWORK SUPPORT</span></div>
+            <div class="portfolio-visual portfolio-router" aria-hidden="true"><span>⌁</span><i></i><i></i><i></i></div>
+            <h3>Troubleshooting jaringan</h3>
+            <p>Penanganan gangguan konektivitas dan pemeriksaan konfigurasi jaringan berbasis MikroTik.</p>
+            <div class="portfolio-tags"><span>MikroTik</span><span>Diagnosa</span><span>Wi-Fi</span></div>
+          </article>
+          <article class="portfolio-card">
+            <div class="portfolio-card-top"><span class="portfolio-number">03</span><span class="portfolio-type">ELECTRONICS</span></div>
+            <div class="portfolio-visual portfolio-device" aria-hidden="true"><span>▯</span><i></i></div>
+            <h3>Servis smartphone</h3>
+            <p>Pemeriksaan keluhan pelanggan serta penanganan permasalahan perangkat dari sisi perangkat keras dan perangkat lunak.</p>
+            <div class="portfolio-tags"><span>Hardware</span><span>Software</span><span>Perbaikan</span></div>
+          </article>
+        </div>
+        <p class="portfolio-note">Catatan: bagian ini merangkum bidang pekerjaan berdasarkan pengalaman kerja. Foto dokumentasi proyek dapat ditambahkan kemudian.</p>
+      </section>
+    </div>
+
+    <!-- Halaman 6: Kontak & Sosial Media -->
     <div id="kontak" class="page-tab">
       <section class="section contact">
         <p class="eyebrow">ADA PELUANG KERJA?</p>
