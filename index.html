@@ -644,22 +644,148 @@
         text-align: center;
       }
     }
+
+    /* Responsive radial sidebar and refined layout */
+    html { scroll-behavior: smooth; }
+    body { overflow-x: hidden; }
+    .topbar {
+      height: 76px; padding: 0 5.5% 0 132px; position: sticky;
+      background: rgba(245,245,242,.94); border-bottom: 1px solid var(--line);
+    }
+    .topbar-title { display:flex; flex-direction:column; margin-right:auto; margin-left:18px; line-height:1.25; }
+    .topbar-title strong { font:800 13px Manrope,sans-serif; letter-spacing:1.8px; }
+    .topbar-title span { font-size:9px; letter-spacing:2px; color:var(--muted); margin-top:4px; }
+    .topbar-status { display:flex; align-items:center; gap:9px; color:var(--muted); font-size:9px; letter-spacing:1.5px; font-weight:700; }
+    .topbar-status i { width:7px; height:7px; border-radius:50%; background:#79a85b; box-shadow:0 0 0 4px rgba(121,168,91,.13); }
+    .radial-sidebar {
+      position:fixed; z-index:30; left:18px; top:50%; transform:translateY(-50%);
+      width:86px; padding:18px 10px 14px; display:flex; flex-direction:column; align-items:center;
+      gap:15px; background:rgba(255,255,255,.94); border:1px solid rgba(217,217,211,.9);
+      border-radius:28px; box-shadow:0 16px 45px rgba(22,22,22,.09); backdrop-filter:blur(16px);
+    }
+    .sidebar-caption { font-size:8px; font-weight:800; letter-spacing:2px; color:#999; }
+    .radial-nav { display:flex; flex-direction:column; gap:10px; width:100%; align-items:center; }
+    .radial-link {
+      width:58px; min-height:58px; display:flex; flex-direction:column; justify-content:center; align-items:center;
+      gap:3px; border-radius:19px; color:var(--muted); transition:transform .2s,background .2s,color .2s;
+    }
+    .radial-link:hover { transform:translateY(-2px); background:#f3f3ef; color:var(--ink); }
+    .radial-link.active { color:var(--ink); background:var(--accent); box-shadow:0 7px 16px rgba(252,167,59,.25); }
+    .radial-icon { width:28px; height:28px; display:grid; place-items:center; font-size:19px; line-height:1; }
+    .radial-label { font-size:8px; font-weight:700; letter-spacing:.1px; }
+    .sidebar-foot { width:100%; border-top:1px solid var(--line); padding-top:12px; text-align:center; font:800 11px Manrope,sans-serif; }
+    .sidebar-foot span { display:block; margin-top:2px; font:600 8px 'DM Sans',sans-serif; color:var(--muted); letter-spacing:1px; }
+    main { margin-left:112px; }
+    footer { padding-left:5.5%; }
+    .section { padding-left:clamp(34px,7vw,110px); padding-right:clamp(34px,7vw,110px); }
+    .hero { min-height:calc(100vh - 76px); max-width:1500px; margin:0 auto; gap:clamp(35px,6vw,100px); }
+    .hero-card { border-radius:4px; box-shadow:18px 18px 0 rgba(22,22,22,.06); }
+    .about-content,.education-card { border-radius:5px; box-shadow:0 10px 28px rgba(22,22,22,.035); }
+    .section-heading h2 { font:800 clamp(32px,4vw,48px)/1.12 Manrope,sans-serif; letter-spacing:-1.8px; margin:0; }
+    .experience,.skills,.education { max-width:1380px; margin:0 auto; }
+    .education-list { grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; }
+    .education-card { min-width:0; }
+    .contact { border-radius:6px; max-width:1380px; margin:40px auto 0; }
+    .timeline-item { grid-template-columns:minmax(105px,130px) minmax(0,1fr); }
+    .personal-data div { grid-template-columns:120px minmax(0,1fr); }
+    a:focus-visible,button:focus-visible { outline:3px solid var(--accent); outline-offset:3px; }
+    @media (min-width:801px) and (max-width:1100px) {
+      .radial-sidebar { left:10px; width:72px; padding:14px 6px; }
+      .radial-link { width:54px; min-height:54px; }
+      main { margin-left:88px; }
+      .topbar { padding-left:110px; }
+      .section { padding-left:5%; padding-right:5%; }
+      .hero { grid-template-columns:1.05fr .95fr; gap:4%; }
+      .hero h1 { font-size:clamp(64px,8vw,88px); letter-spacing:-4px; }
+      .education-list { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .education-card:first-child { grid-column:1/-1; min-height:190px; }
+    }
+    @media (max-width:800px) {
+      .topbar { height:68px; padding:0 5%; }
+      .topbar-status { display:none; }
+      .topbar-title { margin-left:12px; }
+      .radial-sidebar {
+        left:50%; top:auto; bottom:12px; transform:translateX(-50%);
+        width:min(94vw,520px); padding:8px 10px calc(8px + env(safe-area-inset-bottom));
+        border-radius:22px; flex-direction:row; justify-content:center; gap:0;
+        box-shadow:0 10px 35px rgba(22,22,22,.16);
+      }
+      .sidebar-caption,.sidebar-foot { display:none; }
+      .radial-nav { flex-direction:row; justify-content:space-around; gap:3px; }
+      .radial-link { width:min(18vw,76px); min-height:54px; border-radius:15px; gap:2px; }
+      .radial-icon { width:26px; height:26px; font-size:18px; }
+      .radial-label { font-size:9px; }
+      main { margin-left:0; padding-bottom:94px; }
+      .section { padding:54px 6%; }
+      .hero { min-height:auto; grid-template-columns:1fr; gap:34px; padding-top:44px; padding-bottom:54px; }
+      .hero h1 { font-size:clamp(58px,13vw,86px); letter-spacing:-4px; }
+      .hero-card { min-height:300px; }
+      .experience,.skills { grid-template-columns:1fr; gap:26px; }
+      .education-list { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .education-card { min-height:250px; padding:22px; }
+      .contact { margin:18px 5% 0; padding:56px 6%; }
+      footer { padding:20px 5% 115px; }
+    }
+    @media (max-width:520px) {
+      .brand-logo-wrap { width:40px; height:40px; }
+      .topbar-title strong { font-size:12px; }
+      .topbar-title span { font-size:8px; }
+      .section { padding:44px 5%; }
+      .hero { padding-top:34px; gap:28px; }
+      .hero h1 { font-size:clamp(54px,16vw,76px); letter-spacing:-3.5px; }
+      .role { font-size:14px; }
+      .intro { font-size:13px; }
+      .hero-actions { gap:9px; }
+      .button { padding:11px 13px; font-size:11px; }
+      .hero-card { min-height:270px; padding:26px; }
+      .profile-photo-wrap { width:88px; height:88px; top:20px; right:20px; }
+      .hero-card h2 { font-size:29px; }
+      .about-content { padding:22px 18px; }
+      .about-content .large-copy { font-size:18px; }
+      .personal-data div { grid-template-columns:1fr; gap:4px; padding:12px 0; }
+      .timeline-item { grid-template-columns:1fr; gap:7px; padding:22px 0; }
+      .period { font-weight:700; }
+      .education-list { grid-template-columns:1fr; gap:13px; }
+      .education-card,.education-card:first-child { min-height:0; padding:22px; }
+      .year { margin-top:22px; }
+      .skill { grid-template-columns:30px minmax(0,1fr) 16px; gap:9px; }
+      .contact h2 { font-size:clamp(34px,10vw,48px); }
+      .contact-links,.social-links-group,.business-link-group { gap:8px; }
+      .radial-sidebar { bottom:8px; width:calc(100% - 18px); }
+      .radial-link { width:19vw; min-height:51px; }
+      .radial-label { font-size:8px; }
+      main { padding-bottom:82px; }
+      footer { padding-bottom:105px; }
+    }
+    @media (prefers-reduced-motion:reduce) {
+      *,*::before,*::after { scroll-behavior:auto !important; animation-duration:.01ms !important; transition-duration:.01ms !important; }
+    }
+
   </style>
 </head>
 <body>
   <header class="topbar">
-    <a class="brand-logo-wrap" onclick="switchTab('beranda')">
-      <img class="brand-logo" src="foto-abdul-azis.jpg" alt="Logo Abdul Azis">
+    <a class="brand-logo-wrap" onclick="switchTab('beranda')" aria-label="Kembali ke beranda">
+      <img class="brand-logo" src="foto-abdul-azis.jpg" alt="Foto Abdul Azis">
     </a>
-    
-    <nav id="navMenu">
-      <a class="nav-link active" onclick="switchTab('beranda')">Beranda</a>
-      <a class="nav-link" onclick="switchTab('pengalaman')">Pengalaman</a>
-      <a class="nav-link" onclick="switchTab('pendidikan')">Pendidikan</a>
-      <a class="nav-link" onclick="switchTab('keahlian')">Keahlian</a>
-      <a class="nav-link" onclick="switchTab('kontak')">Kontak</a>
-    </nav>
+    <div class="topbar-title">
+      <strong>ABDUL AZIS</strong>
+      <span>CURRICULUM VITAE</span>
+    </div>
+    <span class="topbar-status"><i></i> PORTOFOLIO PROFESIONAL</span>
   </header>
+
+  <aside class="radial-sidebar" aria-label="Navigasi utama">
+    <div class="sidebar-caption">MENU</div>
+    <nav class="radial-nav">
+      <a class="radial-link active" href="#beranda" data-tab="beranda" aria-label="Beranda" title="Beranda" onclick="switchTab('beranda'); return false;"><span class="radial-icon">⌂</span><span class="radial-label">Beranda</span></a>
+      <a class="radial-link" href="#pengalaman" data-tab="pengalaman" aria-label="Pengalaman" title="Pengalaman" onclick="switchTab('pengalaman'); return false;"><span class="radial-icon">▤</span><span class="radial-label">Pengalaman</span></a>
+      <a class="radial-link" href="#pendidikan" data-tab="pendidikan" aria-label="Pendidikan" title="Pendidikan" onclick="switchTab('pendidikan'); return false;"><span class="radial-icon">▣</span><span class="radial-label">Pendidikan</span></a>
+      <a class="radial-link" href="#keahlian" data-tab="keahlian" aria-label="Keahlian" title="Keahlian" onclick="switchTab('keahlian'); return false;"><span class="radial-icon">✳</span><span class="radial-label">Keahlian</span></a>
+      <a class="radial-link" href="#kontak" data-tab="kontak" aria-label="Kontak" title="Kontak" onclick="switchTab('kontak'); return false;"><span class="radial-icon">✉</span><span class="radial-label">Kontak</span></a>
+    </nav>
+    <div class="sidebar-foot">AA<span>2026</span></div>
+  </aside>
 
   <main>
     <!-- Halaman 1: Beranda & Profil -->
@@ -876,12 +1002,12 @@
         targetTab.classList.add('active');
       }
 
-      const navLinks = document.querySelectorAll('.nav-link');
+      const navLinks = document.querySelectorAll('.radial-link');
       navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('onclick') && link.getAttribute('onclick').includes(tabId)) {
-          link.classList.add('active');
-        }
+        const active = link.dataset.tab === tabId;
+        link.classList.toggle('active', active);
+        if (active) link.setAttribute('aria-current', 'page');
+        else link.removeAttribute('aria-current');
       });
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
