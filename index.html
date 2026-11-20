@@ -761,6 +761,69 @@
       *,*::before,*::after { scroll-behavior:auto !important; animation-duration:.01ms !important; transition-duration:.01ms !important; }
     }
 
+
+    /* Animated circular navigation inspired by the supplied reference */
+    .radial-dock { position:fixed; z-index:100; left:34px; top:50%; width:1px; height:1px; transform:translateY(-50%); }
+    .radial-toggle,.radial-item {
+      position:absolute; display:grid; place-items:center; width:66px; height:66px; border:0; border-radius:50%;
+      background:#d9143c; color:#fff; cursor:pointer; box-shadow:0 9px 24px rgba(130,10,40,.22);
+      -webkit-tap-highlight-color:transparent;
+    }
+    .radial-toggle { left:0; top:0; z-index:3; transform:translate(-50%,-50%); transition:background .25s,transform .25s,box-shadow .25s; }
+    .radial-toggle:hover { background:#bd1034; transform:translate(-50%,-50%) scale(1.06); box-shadow:0 12px 28px rgba(130,10,40,.3); }
+    .toggle-bars { display:flex; flex-direction:column; gap:5px; transition:opacity .2s,transform .25s; }
+    .toggle-bars i { display:block; width:25px; height:3px; border-radius:4px; background:#fff; }
+    .toggle-close { position:absolute; font:300 42px/1 Arial,sans-serif; opacity:0; transform:rotate(-90deg) scale(.5); transition:opacity .2s,transform .25s; }
+    .radial-menu { position:absolute; inset:0; pointer-events:none; }
+    .radial-item {
+      left:0; top:0; width:58px; height:58px; text-decoration:none; pointer-events:auto;
+      opacity:0; visibility:hidden; transform:translate(-50%,-50%) scale(.15);
+      transition:transform .48s cubic-bezier(.2,.85,.25,1.25),opacity .25s,visibility .25s,background .2s,box-shadow .2s;
+      transition-delay:calc(var(--i) * 35ms);
+    }
+    .radial-item:hover,.radial-item.active { background:#a90e31; box-shadow:0 11px 26px rgba(130,10,40,.32); }
+    .radial-symbol { font:700 25px/1 'DM Sans',sans-serif; color:#fff; }
+    .radial-tooltip { position:absolute; left:68px; top:50%; transform:translateY(-50%) translateX(-5px); white-space:nowrap; padding:6px 10px; border-radius:7px; background:#171717; color:#fff; font-size:11px; font-weight:700; opacity:0; pointer-events:none; transition:.2s; }
+    .radial-item:hover .radial-tooltip { opacity:1; transform:translateY(-50%) translateX(0); }
+    .radial-dock.open .radial-toggle { background:#a90e31; }
+    .radial-dock.open .toggle-bars { opacity:0; transform:rotate(45deg) scale(.5); }
+    .radial-dock.open .toggle-close { opacity:1; transform:rotate(0) scale(1); }
+    .radial-dock.open .radial-item { opacity:1; visibility:visible; transform:translate(var(--x),var(--y)) scale(1); }
+    .radial-item:nth-child(1) { --i:0; --x:112px; --y:-150px; }
+    .radial-item:nth-child(2) { --i:1; --x:132px; --y:-75px; }
+    .radial-item:nth-child(3) { --i:2; --x:142px; --y:0px; }
+    .radial-item:nth-child(4) { --i:3; --x:132px; --y:75px; }
+    .radial-item:nth-child(5) { --i:4; --x:112px; --y:150px; }
+    .radial-item:focus-visible,.radial-toggle:focus-visible { outline:3px solid #171717; outline-offset:5px; }
+    @media (max-width:800px) {
+      .radial-dock { left:25px; top:auto; bottom:24px; transform:none; }
+      .radial-toggle { width:60px; height:60px; transform:translate(0,0); }
+      .radial-toggle:hover { transform:scale(1.05); }
+      .radial-item { width:54px; height:54px; }
+      .radial-dock.open .radial-item:nth-child(1) { --x:68px; --y:-164px; }
+      .radial-dock.open .radial-item:nth-child(2) { --x:137px; --y:-137px; }
+      .radial-dock.open .radial-item:nth-child(3) { --x:184px; --y:-83px; }
+      .radial-dock.open .radial-item:nth-child(4) { --x:199px; --y:-15px; }
+      .radial-dock.open .radial-item:nth-child(5) { --x:176px; --y:54px; }
+      .radial-tooltip { left:50%; top:auto; bottom:60px; transform:translateX(-50%) translateY(5px); }
+      .radial-item:hover .radial-tooltip { transform:translateX(-50%) translateY(0); }
+      main { padding-bottom:25px; }
+      footer { padding-bottom:28px; }
+    }
+    @media (max-width:380px) {
+      .radial-dock { left:18px; bottom:18px; }
+      .radial-toggle { width:56px; height:56px; }
+      .radial-item { width:49px; height:49px; }
+      .radial-dock.open .radial-item:nth-child(1) { --x:61px; --y:-145px; }
+      .radial-dock.open .radial-item:nth-child(2) { --x:120px; --y:-122px; }
+      .radial-dock.open .radial-item:nth-child(3) { --x:161px; --y:-74px; }
+      .radial-dock.open .radial-item:nth-child(4) { --x:174px; --y:-13px; }
+      .radial-dock.open .radial-item:nth-child(5) { --x:153px; --y:48px; }
+    }
+    @media (prefers-reduced-motion:reduce) {
+      .radial-item,.radial-toggle,.toggle-bars,.toggle-close,.radial-tooltip { transition-duration:.01ms !important; }
+    }
+
   </style>
 </head>
 <body>
@@ -775,17 +838,19 @@
     <span class="topbar-status"><i></i> PORTOFOLIO PROFESIONAL</span>
   </header>
 
-  <aside class="radial-sidebar" aria-label="Navigasi utama">
-    <div class="sidebar-caption">MENU</div>
-    <nav class="radial-nav">
-      <a class="radial-link active" href="#beranda" data-tab="beranda" aria-label="Beranda" title="Beranda" onclick="switchTab('beranda'); return false;"><span class="radial-icon">⌂</span><span class="radial-label">Beranda</span></a>
-      <a class="radial-link" href="#pengalaman" data-tab="pengalaman" aria-label="Pengalaman" title="Pengalaman" onclick="switchTab('pengalaman'); return false;"><span class="radial-icon">▤</span><span class="radial-label">Pengalaman</span></a>
-      <a class="radial-link" href="#pendidikan" data-tab="pendidikan" aria-label="Pendidikan" title="Pendidikan" onclick="switchTab('pendidikan'); return false;"><span class="radial-icon">▣</span><span class="radial-label">Pendidikan</span></a>
-      <a class="radial-link" href="#keahlian" data-tab="keahlian" aria-label="Keahlian" title="Keahlian" onclick="switchTab('keahlian'); return false;"><span class="radial-icon">✳</span><span class="radial-label">Keahlian</span></a>
-      <a class="radial-link" href="#kontak" data-tab="kontak" aria-label="Kontak" title="Kontak" onclick="switchTab('kontak'); return false;"><span class="radial-icon">✉</span><span class="radial-label">Kontak</span></a>
+  <div class="radial-dock" id="radialDock">
+    <button class="radial-toggle" id="radialToggle" type="button" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="radialMenu" onclick="toggleRadialMenu()">
+      <span class="toggle-bars" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="toggle-close" aria-hidden="true">×</span>
+    </button>
+    <nav class="radial-menu" id="radialMenu" aria-label="Navigasi utama">
+      <a class="radial-item active" href="#beranda" data-tab="beranda" aria-label="Beranda" title="Beranda" onclick="selectRadialTab('beranda'); return false;"><span class="radial-symbol">⌂</span><span class="radial-tooltip">Beranda</span></a>
+      <a class="radial-item" href="#pengalaman" data-tab="pengalaman" aria-label="Pengalaman" title="Pengalaman" onclick="selectRadialTab('pengalaman'); return false;"><span class="radial-symbol">▤</span><span class="radial-tooltip">Pengalaman</span></a>
+      <a class="radial-item" href="#pendidikan" data-tab="pendidikan" aria-label="Pendidikan" title="Pendidikan" onclick="selectRadialTab('pendidikan'); return false;"><span class="radial-symbol">▣</span><span class="radial-tooltip">Pendidikan</span></a>
+      <a class="radial-item" href="#keahlian" data-tab="keahlian" aria-label="Keahlian" title="Keahlian" onclick="selectRadialTab('keahlian'); return false;"><span class="radial-symbol">✳</span><span class="radial-tooltip">Keahlian</span></a>
+      <a class="radial-item" href="#kontak" data-tab="kontak" aria-label="Kontak" title="Kontak" onclick="selectRadialTab('kontak'); return false;"><span class="radial-symbol">✉</span><span class="radial-tooltip">Kontak</span></a>
     </nav>
-    <div class="sidebar-foot">AA<span>2026</span></div>
-  </aside>
+  </div>
 
   <main>
     <!-- Halaman 1: Beranda & Profil -->
@@ -993,6 +1058,29 @@
   </footer>
 
   <script>
+
+    function toggleRadialMenu(forceState) {
+      const dock = document.getElementById('radialDock');
+      const toggle = document.getElementById('radialToggle');
+      const isOpen = typeof forceState === 'boolean' ? forceState : !dock.classList.contains('open');
+      dock.classList.toggle('open', isOpen);
+      toggle.setAttribute('aria-expanded', String(isOpen));
+      toggle.setAttribute('aria-label', isOpen ? 'Tutup menu navigasi' : 'Buka menu navigasi');
+    }
+
+    function selectRadialTab(tabId) {
+      switchTab(tabId);
+      toggleRadialMenu(false);
+    }
+
+    document.addEventListener('click', function(event) {
+      const dock = document.getElementById('radialDock');
+      if (dock.classList.contains('open') && !dock.contains(event.target)) toggleRadialMenu(false);
+    });
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') toggleRadialMenu(false);
+    });
+
     function switchTab(tabId) {
       const tabs = document.querySelectorAll('.page-tab');
       tabs.forEach(tab => tab.classList.remove('active'));
