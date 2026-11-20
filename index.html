@@ -883,6 +883,80 @@
       .radial-dock { left:16px; bottom:16px; }
     }
 
+
+    /* Sidebar V2 — dark glass, violet neon active state */
+    .neon-sidebar {
+      --neon:#a855f7; --neon-bright:#c084fc;
+      position:fixed; z-index:120; left:18px; top:50%; transform:translateY(-50%);
+      width:84px; height:min(690px,calc(100vh - 48px)); padding:18px 12px;
+      display:flex; flex-direction:column; overflow:visible; color:#f5f3ff;
+      background:linear-gradient(160deg,rgba(28,27,35,.97),rgba(12,12,17,.98));
+      border:1px solid rgba(255,255,255,.10); border-radius:25px;
+      box-shadow:0 22px 65px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.07);
+      backdrop-filter:blur(22px); -webkit-backdrop-filter:blur(22px);
+      transition:width .38s cubic-bezier(.2,.8,.2,1),box-shadow .3s;
+    }
+    .neon-sidebar.expanded { width:224px; box-shadow:0 24px 75px rgba(0,0,0,.34),0 0 28px rgba(168,85,247,.12),inset 0 1px 0 rgba(255,255,255,.08); }
+    .neon-sidebar-top { display:flex; align-items:center; justify-content:center; min-height:48px; position:relative; margin-bottom:24px; }
+    .neon-brand { display:flex; align-items:center; gap:12px; min-width:0; }
+    .neon-brand-mark { width:38px; height:38px; flex:0 0 38px; display:grid; place-items:center; border-radius:13px; color:#fff; font:800 21px Manrope,sans-serif; background:linear-gradient(145deg,#a855f7,#6d28d9); box-shadow:0 0 22px rgba(168,85,247,.42); }
+    .neon-brand-name,.neon-brand-name small { display:none; white-space:nowrap; }
+    .neon-brand-name { font:800 12px Manrope,sans-serif; letter-spacing:1px; }
+    .neon-brand-name small { display:block; margin-top:4px; color:#9692a4; font:600 9px 'DM Sans',sans-serif; letter-spacing:2px; }
+    .neon-collapse { position:absolute; right:-27px; top:7px; width:27px; height:27px; border-radius:50%; border:1px solid rgba(255,255,255,.13); background:#24222d; color:#eee; cursor:pointer; box-shadow:0 3px 12px #0008; transition:.25s; }
+    .neon-collapse:hover { color:#fff; border-color:var(--neon-bright); box-shadow:0 0 15px #a855f766; }
+    .neon-collapse span { display:block; font:24px/18px Arial; transition:transform .35s; }
+    .neon-sidebar.expanded .neon-sidebar-top { justify-content:flex-start; padding-left:5px; }
+    .neon-sidebar.expanded .neon-brand-name { display:block; }
+    .neon-sidebar.expanded .neon-collapse span { transform:rotate(180deg); }
+    .neon-search { height:42px; flex:0 0 42px; display:flex; align-items:center; justify-content:center; gap:12px; margin-bottom:26px; border-radius:13px; color:#9994a7; background:rgba(0,0,0,.22); border:1px solid rgba(255,255,255,.045); font-size:21px; }
+    .neon-search-label { display:none; font-size:11px; }
+    .neon-sidebar.expanded .neon-search { justify-content:flex-start; padding:0 13px; }
+    .neon-sidebar.expanded .neon-search-label { display:block; }
+    .neon-menu-caption { margin:0 0 12px 12px; color:#777284; font-size:9px; font-weight:800; letter-spacing:2px; opacity:0; height:0; overflow:hidden; }
+    .neon-sidebar.expanded .neon-menu-caption { opacity:1; height:auto; }
+    .neon-nav { display:flex; flex-direction:column; gap:8px; }
+    .neon-link { position:relative; min-height:48px; padding:0; display:flex; align-items:center; justify-content:center; gap:15px; border-radius:13px; color:#a7a3b2; transition:background .25s,color .25s,box-shadow .25s; }
+    .neon-link:hover { color:#fff; background:rgba(168,85,247,.10); }
+    .neon-icon { width:26px; flex:0 0 26px; text-align:center; font-size:21px; line-height:1; }
+    .neon-link-label { display:none; white-space:nowrap; font-size:12px; font-weight:600; }
+    .neon-link i { position:absolute; left:-12px; top:50%; width:3px; height:0; transform:translateY(-50%); border-radius:0 5px 5px 0; background:var(--neon-bright); box-shadow:0 0 8px var(--neon),0 0 18px var(--neon); transition:height .25s; }
+    .neon-link.active { color:#fff; background:linear-gradient(90deg,rgba(168,85,247,.25),rgba(168,85,247,.035)); box-shadow:inset 0 0 22px rgba(168,85,247,.08),0 0 18px rgba(168,85,247,.08); }
+    .neon-link.active .neon-icon { color:#fff; filter:drop-shadow(0 0 7px #c084fc); }
+    .neon-link.active i { height:30px; }
+    .neon-sidebar.expanded .neon-link { justify-content:flex-start; padding:0 13px; }
+    .neon-sidebar.expanded .neon-link-label { display:block; }
+    .neon-sidebar-bottom { margin-top:auto; min-height:42px; display:flex; align-items:center; justify-content:center; gap:9px; border-top:1px solid rgba(255,255,255,.07); padding-top:14px; color:#858091; font-size:9px; letter-spacing:1px; }
+    .neon-live-dot { width:7px; height:7px; flex:0 0 7px; border-radius:50%; background:#a3e635; box-shadow:0 0 10px #a3e635; }
+    .neon-bottom-label,.neon-version { display:none; white-space:nowrap; }
+    .neon-sidebar.expanded .neon-bottom-label,.neon-sidebar.expanded .neon-version { display:inline; }
+    .neon-version { margin-left:auto; color:#b78cff; }
+    .neon-mobile-scrim { display:none; }
+    main { margin-left:112px; }
+    .topbar { padding-left:132px; }
+    @media (max-width:1100px) and (min-width:801px) {
+      .neon-sidebar { left:12px; width:76px; }
+      .neon-sidebar.expanded { width:210px; }
+      main { margin-left:98px; }
+      .topbar { padding-left:115px; }
+    }
+    @media (max-width:800px) {
+      .neon-sidebar { left:10px; top:50%; transform:translateY(-50%); width:70px; height:min(620px,calc(100dvh - 90px)); padding:14px 9px; }
+      .neon-sidebar.expanded { width:min(236px,calc(100vw - 34px)); }
+      .neon-collapse { right:-24px; }
+      .neon-mobile-scrim { position:fixed; z-index:110; inset:0; border:0; background:rgba(0,0,0,.38); backdrop-filter:blur(2px); }
+      main { margin-left:0; }
+      .topbar { padding-left:5%; }
+    }
+    @media (max-width:420px) {
+      .neon-sidebar { left:7px; width:64px; padding:12px 7px; }
+      .neon-sidebar.expanded { width:min(220px,calc(100vw - 28px)); }
+      .neon-link { min-height:45px; }
+    }
+    @media (prefers-reduced-motion:reduce) {
+      .neon-sidebar,.neon-link,.neon-link i,.neon-collapse span { transition-duration:.01ms !important; }
+    }
+
   </style>
 </head>
 <body>
@@ -897,19 +971,23 @@
     <span class="topbar-status"><i></i> PORTOFOLIO PROFESIONAL</span>
   </header>
 
-  <div class="radial-dock" id="radialDock">
-    <button class="radial-toggle" id="radialToggle" type="button" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="radialMenu" onclick="toggleRadialMenu()">
-      <span class="toggle-bars" aria-hidden="true"><i></i><i></i><i></i></span>
-      <span class="toggle-close" aria-hidden="true">×</span>
-    </button>
-    <nav class="radial-menu" id="radialMenu" aria-label="Navigasi utama">
-      <a class="radial-item active" href="#beranda" data-tab="beranda" aria-label="Beranda" title="Beranda" onclick="selectRadialTab('beranda'); return false;"><span class="radial-symbol">⌂</span><span class="radial-tooltip">Beranda</span></a>
-      <a class="radial-item" href="#pengalaman" data-tab="pengalaman" aria-label="Pengalaman" title="Pengalaman" onclick="selectRadialTab('pengalaman'); return false;"><span class="radial-symbol">▤</span><span class="radial-tooltip">Pengalaman</span></a>
-      <a class="radial-item" href="#pendidikan" data-tab="pendidikan" aria-label="Pendidikan" title="Pendidikan" onclick="selectRadialTab('pendidikan'); return false;"><span class="radial-symbol">▣</span><span class="radial-tooltip">Pendidikan</span></a>
-      <a class="radial-item" href="#keahlian" data-tab="keahlian" aria-label="Keahlian" title="Keahlian" onclick="selectRadialTab('keahlian'); return false;"><span class="radial-symbol">✳</span><span class="radial-tooltip">Keahlian</span></a>
-      <a class="radial-item" href="#kontak" data-tab="kontak" aria-label="Kontak" title="Kontak" onclick="selectRadialTab('kontak'); return false;"><span class="radial-symbol">✉</span><span class="radial-tooltip">Kontak</span></a>
+  <aside class="neon-sidebar" id="neonSidebar" aria-label="Navigasi CV">
+    <div class="neon-sidebar-top">
+      <div class="neon-brand"><span class="neon-brand-mark">A</span><span class="neon-brand-name">ABDUL AZIS<small>PORTFOLIO</small></span></div>
+      <button class="neon-collapse" type="button" onclick="toggleNeonSidebar()" aria-label="Perluas atau ciutkan sidebar" aria-expanded="false"><span>›</span></button>
+    </div>
+    <div class="neon-search"><span>⌕</span><span class="neon-search-label">Navigasi CV</span></div>
+    <div class="neon-menu-caption">MENU</div>
+    <nav class="neon-nav" aria-label="Navigasi utama">
+      <a class="neon-link active" href="#beranda" data-tab="beranda" title="Beranda" onclick="selectNeonTab('beranda');return false;"><span class="neon-icon">⌂</span><span class="neon-link-label">Beranda</span><i></i></a>
+      <a class="neon-link" href="#pengalaman" data-tab="pengalaman" title="Pengalaman" onclick="selectNeonTab('pengalaman');return false;"><span class="neon-icon">▣</span><span class="neon-link-label">Pengalaman</span><i></i></a>
+      <a class="neon-link" href="#pendidikan" data-tab="pendidikan" title="Pendidikan" onclick="selectNeonTab('pendidikan');return false;"><span class="neon-icon">⌑</span><span class="neon-link-label">Pendidikan</span><i></i></a>
+      <a class="neon-link" href="#keahlian" data-tab="keahlian" title="Keahlian" onclick="selectNeonTab('keahlian');return false;"><span class="neon-icon">⌁</span><span class="neon-link-label">Keahlian</span><i></i></a>
+      <a class="neon-link" href="#kontak" data-tab="kontak" title="Kontak" onclick="selectNeonTab('kontak');return false;"><span class="neon-icon">✉</span><span class="neon-link-label">Kontak</span><i></i></a>
     </nav>
-  </div>
+    <div class="neon-sidebar-bottom"><span class="neon-live-dot"></span><span class="neon-bottom-label">CV ONLINE</span><span class="neon-version">V2.0</span></div>
+  </aside>
+  <button class="neon-mobile-scrim" id="neonScrim" aria-label="Tutup menu" onclick="toggleNeonSidebar(false)"></button>
 
   <main>
     <!-- Halaman 1: Beranda & Profil -->
@@ -1118,27 +1196,18 @@
 
   <script>
 
-    function toggleRadialMenu(forceState) {
-      const dock = document.getElementById('radialDock');
-      const toggle = document.getElementById('radialToggle');
-      const isOpen = typeof forceState === 'boolean' ? forceState : !dock.classList.contains('open');
-      dock.classList.toggle('open', isOpen);
-      toggle.setAttribute('aria-expanded', String(isOpen));
-      toggle.setAttribute('aria-label', isOpen ? 'Tutup menu navigasi' : 'Buka menu navigasi');
-    }
 
-    function selectRadialTab(tabId) {
+    function toggleNeonSidebar(forceState) {
+      const sidebar=document.getElementById('neonSidebar');
+      const expanded=typeof forceState==='boolean'?forceState:!sidebar.classList.contains('expanded');
+      sidebar.classList.toggle('expanded',expanded);
+      sidebar.querySelector('.neon-collapse').setAttribute('aria-expanded',String(expanded));
+      document.body.classList.toggle('neon-menu-open',expanded && window.matchMedia('(max-width: 800px)').matches);
+    }
+    function selectNeonTab(tabId) {
       switchTab(tabId);
-      toggleRadialMenu(false);
+      if(window.matchMedia('(max-width: 800px)').matches) toggleNeonSidebar(false);
     }
-
-    document.addEventListener('click', function(event) {
-      const dock = document.getElementById('radialDock');
-      if (dock.classList.contains('open') && !dock.contains(event.target)) toggleRadialMenu(false);
-    });
-    document.addEventListener('keydown', function(event) {
-      if (event.key === 'Escape') toggleRadialMenu(false);
-    });
 
     function switchTab(tabId) {
       const tabs = document.querySelectorAll('.page-tab');
@@ -1149,7 +1218,7 @@
         targetTab.classList.add('active');
       }
 
-      const navLinks = document.querySelectorAll('.radial-link');
+      const navLinks = document.querySelectorAll('.neon-link');
       navLinks.forEach(link => {
         const active = link.dataset.tab === tabId;
         link.classList.toggle('active', active);
