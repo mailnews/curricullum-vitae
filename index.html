@@ -824,6 +824,65 @@
       .radial-item,.radial-toggle,.toggle-bars,.toggle-close,.radial-tooltip { transition-duration:.01ms !important; }
     }
 
+
+    /* Final theme alignment: warm neutral + charcoal + CV accent */
+    .radial-dock {
+      left:38px;
+      filter: drop-shadow(0 8px 18px rgba(22,22,22,.10));
+    }
+    .radial-toggle,.radial-item {
+      background:var(--ink);
+      color:var(--white);
+      border:1px solid rgba(255,255,255,.18);
+      box-shadow:0 8px 22px rgba(22,22,22,.16);
+    }
+    .radial-toggle {
+      background:var(--accent);
+      color:var(--ink);
+      border:1px solid rgba(22,22,22,.08);
+      box-shadow:0 10px 26px rgba(252,167,59,.32);
+    }
+    .radial-toggle:hover {
+      background:#f4a02c;
+      box-shadow:0 13px 30px rgba(252,167,59,.4);
+    }
+    .toggle-bars i { background:var(--ink); }
+    .toggle-close { color:var(--ink); }
+    .radial-dock.open .radial-toggle { background:var(--ink); }
+    .radial-dock.open .toggle-bars i,.radial-dock.open .toggle-close { color:var(--white); background:var(--white); }
+    .radial-dock.open .toggle-close { background:transparent; }
+    .radial-item {
+      background:#fff;
+      color:var(--ink);
+      border:1px solid var(--line);
+      box-shadow:0 8px 22px rgba(22,22,22,.10);
+    }
+    .radial-item:hover,.radial-item.active {
+      background:var(--accent);
+      color:var(--ink);
+      border-color:var(--accent);
+      box-shadow:0 11px 26px rgba(252,167,59,.30);
+    }
+    .radial-symbol { color:var(--ink); }
+    .radial-tooltip {
+      background:var(--ink);
+      color:var(--white);
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:0 5px 16px rgba(22,22,22,.16);
+    }
+    .radial-item:focus-visible,.radial-toggle:focus-visible {
+      outline:3px solid var(--accent);
+      outline-offset:5px;
+    }
+    @media (max-width:800px) {
+      .radial-dock { left:20px; bottom:20px; }
+      .radial-toggle { background:var(--accent); }
+      .radial-dock.open .radial-toggle { background:var(--ink); }
+    }
+    @media (max-width:380px) {
+      .radial-dock { left:16px; bottom:16px; }
+    }
+
   </style>
 </head>
 <body>
