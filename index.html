@@ -1530,6 +1530,36 @@
       .print-footer { margin-top:14px; padding-top:7px; border-top:1px solid #dce4ee; color:#718096; text-align:center; font-size:7.5pt; }
     }
 
+
+    /* Kartu sertifikat digital */
+    .digital-certificates { margin-top:58px; padding-top:34px; border-top:1px solid var(--line); }
+    .certificates-heading { display:flex; justify-content:space-between; align-items:end; gap:24px; margin-bottom:22px; }
+    .certificates-heading .eyebrow { margin:0 0 8px; }
+    .certificates-heading h3 { font:800 clamp(23px,3vw,32px)/1.2 Manrope,sans-serif; margin:0; letter-spacing:-1px; }
+    .certificates-heading h3 span { color:var(--muted); }
+    .certificates-heading > p { max-width:330px; color:var(--muted); font-size:11px; margin:0; }
+    .digital-cert-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+    .digital-cert-card { background:#fff; border:1px solid var(--line); padding:24px; min-width:0; transition:transform .25s,box-shadow .25s; }
+    .digital-cert-card:hover { transform:translateY(-4px); box-shadow:0 14px 32px rgba(22,22,22,.07); }
+    .digital-cert-top { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:20px; }
+    .digital-cert-symbol { display:grid; place-items:center; width:34px; height:34px; border-radius:50%; background:var(--accent); font-weight:900; }
+    .digital-cert-label { font-size:9px; font-weight:800; letter-spacing:1.2px; color:var(--muted); }
+    .digital-cert-card h4 { font:800 17px/1.4 Manrope,sans-serif; margin:0 0 9px; }
+    .digital-cert-card > p { color:var(--muted); font-size:11px; min-height:38px; margin:0 0 18px; }
+    .digital-cert-meta { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:18px; }
+    .digital-cert-meta span { background:var(--bg); padding:6px 9px; font-size:9px; font-weight:700; }
+    .cert-document-placeholder { display:flex; align-items:center; gap:12px; padding:13px; background:#f7f7f4; border:1px dashed #c9c9c1; color:var(--muted); }
+    .cert-document-placeholder > span { font-size:23px; }
+    .cert-document-placeholder strong,.cert-document-placeholder small { display:block; }
+    .cert-document-placeholder strong { font-size:10px; color:var(--ink); }
+    .cert-document-placeholder small { font-size:9px; margin-top:2px; }
+    .cert-upload-note { color:var(--muted); font-size:10px; margin:14px 0 0; }
+    @media(max-width:800px) {
+      .certificates-heading { align-items:start; flex-direction:column; gap:8px; }
+      .digital-cert-grid { grid-template-columns:1fr; }
+      .digital-cert-card { padding:20px; }
+    }
+
 </style>
 </head>
 <body>
@@ -1688,6 +1718,29 @@
             <p>Pelatihan pemeliharaan kendaraan ringan sistem injeksi.</p>
             <span class="cert-icon">✓</span>
           </article>
+        </div>
+        <div class="digital-certificates">
+          <div class="certificates-heading">
+            <div><p class="eyebrow">DOKUMEN PENDUKUNG</p><h3>Sertifikat <span>digital.</span></h3></div>
+            <p>Informasi sertifikasi kompetensi yang dapat dilengkapi dengan dokumen asli.</p>
+          </div>
+          <div class="digital-cert-grid">
+            <article class="digital-cert-card">
+              <div class="digital-cert-top"><span class="digital-cert-symbol">✓</span><span class="digital-cert-label">BNSP · 260 JP</span></div>
+              <h4>Pemeliharaan Kendaraan Ringan Sistem Konvensional</h4>
+              <p>Pelatihan kompetensi pemeliharaan kendaraan ringan dengan sistem konvensional.</p>
+              <div class="digital-cert-meta"><span>260 Jam Pelajaran</span><span>Sertifikasi BNSP</span></div>
+              <div class="cert-document-placeholder"><span>▧</span><div><strong>Dokumen belum diunggah</strong><small>File sertifikat dapat ditambahkan kemudian.</small></div></div>
+            </article>
+            <article class="digital-cert-card">
+              <div class="digital-cert-top"><span class="digital-cert-symbol">✓</span><span class="digital-cert-label">BNSP · 380 JP</span></div>
+              <h4>Pemeliharaan Kendaraan Ringan Sistem Injeksi</h4>
+              <p>Pelatihan kompetensi pemeliharaan kendaraan ringan dengan sistem injeksi.</p>
+              <div class="digital-cert-meta"><span>380 Jam Pelajaran</span><span>Sertifikasi BNSP</span></div>
+              <div class="cert-document-placeholder"><span>▧</span><div><strong>Dokumen belum diunggah</strong><small>File sertifikat dapat ditambahkan kemudian.</small></div></div>
+            </article>
+          </div>
+          <p class="cert-upload-note">Untuk menampilkan sertifikat asli, unggah foto atau PDF sertifikat ke repositori website. Tautan dokumen dapat dipasang pada masing-masing kartu.</p>
         </div>
         <p class="note">* Detail nomor sertifikat dan tahun pelatihan dapat ditambahkan jika diperlukan.</p>
       </section>
