@@ -1101,6 +1101,15 @@
     }
 
 
+    /* Desktop: rapatkan Beranda agar tidak menyisakan ruang kosong di bawah hero. */
+    @media (min-width:801px) {
+      .hero {
+        min-height:0;
+        padding-top:52px;
+        padding-bottom:52px;
+      }
+    }
+
     /* Mobile: ubah sidebar menjadi bottom navigation horizontal */
     @media (max-width:800px) {
       .neon-sidebar,
