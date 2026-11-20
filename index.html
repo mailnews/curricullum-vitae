@@ -1560,7 +1560,69 @@
       .digital-cert-card { padding:20px; }
     }
 
-</style>
+
+    
+    /* 3D PREMIUM INTERACTION */
+    :root { --depth-shadow: 0 22px 48px rgba(22,22,22,.10); }
+    html { scroll-behavior: smooth; }
+    body {
+      background-image: radial-gradient(ellipse at 12% 8%, rgba(252,167,59,.10), transparent 34%),
+                        radial-gradient(ellipse at 88% 42%, rgba(22,22,22,.045), transparent 36%);
+      perspective: 1400px;
+    }
+    .page-tab.active { animation: pageEnter3D .65s cubic-bezier(.2,.75,.25,1) both; transform-origin: 50% 25%; }
+    @keyframes pageEnter3D {
+      from { opacity: 0; transform: translateY(24px) rotateX(3deg) scale(.985); filter: blur(3px); }
+      to { opacity: 1; transform: translateY(0) rotateX(0) scale(1); filter: blur(0); }
+    }
+    .hero-card, .education-card, .digital-cert-card, .portfolio-card, .skill, .timeline-item,
+    .about-content, .contact-links {
+      transform-style: preserve-3d;
+      transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease;
+      will-change: transform;
+    }
+    .hero-card, .digital-cert-card, .portfolio-card {
+      box-shadow: var(--depth-shadow);
+    }
+    .hero-card:hover, .education-card:hover, .digital-cert-card:hover, .portfolio-card:hover, .skill:hover {
+      transform: perspective(900px) translateY(-7px) rotateX(2deg) rotateY(-2deg);
+      box-shadow: 0 26px 52px rgba(22,22,22,.14);
+    }
+    .button, .neon-link, .brand-logo-wrap, .cert-document-link {
+      transform: translateZ(0);
+      transition: transform .22s cubic-bezier(.2,.8,.2,1), box-shadow .22s ease, filter .22s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .button:active, .neon-link:active, .brand-logo-wrap:active, .cert-document-link:active {
+      transform: scale(.96) translateY(2px);
+      filter: brightness(.96);
+    }
+    .button:hover { box-shadow: 0 10px 24px rgba(22,22,22,.12); }
+    .neon-link { position: relative; overflow: hidden; }
+    .neon-link::after {
+      content: ""; position: absolute; inset: 0; border-radius: inherit;
+      background: linear-gradient(110deg, transparent 20%, rgba(255,255,255,.22) 48%, transparent 72%);
+      transform: translateX(-130%); transition: transform .55s ease; pointer-events: none;
+    }
+    .neon-link:hover::after { transform: translateX(130%); }
+    .portfolio-visual, .hero-card, .digital-cert-symbol { transform: translateZ(18px); }
+    .reveal-on-scroll { transition: opacity .65s ease, transform .65s cubic-bezier(.2,.7,.2,1); }
+    .reveal-on-scroll:not(.is-visible) { transform: translateY(24px) scale(.985); }
+    .tap-ripple {
+      position: absolute; border-radius: 50%; pointer-events: none;
+      width: 12px; height: 12px; background: rgba(252,167,59,.35);
+      transform: translate(-50%,-50%) scale(0); animation: tapRipple .55s ease-out forwards;
+    }
+    @keyframes tapRipple { to { transform: translate(-50%,-50%) scale(15); opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+    @media (max-width: 800px) {
+      .page-tab.active { animation-duration: .42s; }
+      .hero-card, .education-card, .digital-cert-card, .portfolio-card, .skill { transform: none !important; }
+    }
+
+  </style>
 </head>
 <body>
 <aside class="neon-sidebar" id="neonSidebar" aria-label="Navigasi CV">
@@ -1954,6 +2016,60 @@
     initScrollReveal();
 
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    
+    // Efek tilt 3D, ripple saat klik, dan navigasi swipe untuk layar sentuh.
+    function initPremium3D() {
+      const tiltItems = document.querySelectorAll('.hero-card, .education-card, .digital-cert-card, .portfolio-card, .skill');
+      const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+      if (canHover) tiltItems.forEach(item => {
+        item.addEventListener('pointermove', event => {
+          const rect = item.getBoundingClientRect();
+          const x = (event.clientX - rect.left) / rect.width - .5;
+          const y = (event.clientY - rect.top) / rect.height - .5;
+          item.style.transform = 'perspective(900px) translateY(-4px) rotateX(' + (-y * 7) + 'deg) rotateY(' + (x * 8) + 'deg)';
+        });
+        item.addEventListener('pointerleave', () => { item.style.transform = ''; });
+      });
+
+      document.querySelectorAll('.button, .neon-link').forEach(control => {
+        control.addEventListener('click', event => {
+          const rect = control.getBoundingClientRect();
+          const ripple = document.createElement('span');
+          ripple.className = 'tap-ripple';
+          ripple.style.left = (event.clientX ? event.clientX - rect.left : rect.width / 2) + 'px';
+          ripple.style.top = (event.clientY ? event.clientY - rect.top : rect.height / 2) + 'px';
+          if (getComputedStyle(control).position === 'static') control.style.position = 'relative';
+          control.appendChild(ripple);
+          ripple.addEventListener('animationend', () => ripple.remove(), { once: true });
+        });
+      });
+
+      let startX = 0, startY = 0;
+      const content = document.querySelector('main') || document.body;
+      content.addEventListener('touchstart', event => {
+        if (event.touches.length !== 1) return;
+        startX = event.touches[0].clientX;
+        startY = event.touches[0].clientY;
+      }, { passive: true });
+      content.addEventListener('touchend', event => {
+        if (!startX && !startY) return;
+        const dx = event.changedTouches[0].clientX - startX;
+        const dy = event.changedTouches[0].clientY - startY;
+        startX = 0; startY = 0;
+        if (Math.abs(dx) < 85 || Math.abs(dy) > 65) return;
+        const tabs = [...document.querySelectorAll('.page-tab')];
+        const current = tabs.findIndex(tab => tab.classList.contains('active'));
+        const next = current + (dx < 0 ? 1 : -1);
+        if (next >= 0 && next < tabs.length) {
+          const id = tabs[next].id;
+          if (typeof switchTab === 'function') switchTab(id);
+          if (typeof toggleNeonSidebar === 'function') toggleNeonSidebar(false);
+        }
+      }, { passive: true });
+    }
+    initPremium3D();
+
   </script>
 </body>
 </html>
