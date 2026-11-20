@@ -1176,7 +1176,20 @@
       .neon-link-label,.neon-sidebar.expanded .neon-link-label { font-size:7px; }
     }
 
-  </style>
+  
+    /* Opsi 1: rapatkan area Beranda pada desktop */
+    @media (min-width: 801px) {
+      .hero {
+        min-height: auto !important;
+        padding-top: 55px;
+        padding-bottom: 55px;
+      }
+      .about {
+        padding-top: 45px;
+      }
+    }
+
+</style>
 </head>
 <body>
 <aside class="neon-sidebar" id="neonSidebar" aria-label="Navigasi CV">
