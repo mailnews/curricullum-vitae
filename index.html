@@ -1501,6 +1501,35 @@
       .neon-sidebar:not(.expanded) .neon-link { min-width:0; }
     }
 
+
+    /* PRINT-READY CV / A4 PDF */
+    #cv-print-area { display:none; }
+    .cv-download-button { font:inherit; cursor:pointer; border-radius:8px; }
+    @media print {
+      @page { size:A4; margin:13mm 14mm; }
+      html,body { background:#fff !important; color:#17263b !important; }
+      body > *:not(#cv-print-area) { display:none !important; }
+      #cv-print-area { display:block !important; width:100%; color:#17263b; font-family:Arial,Helvetica,sans-serif; font-size:9.2pt; line-height:1.42; }
+      #cv-print-area * { box-sizing:border-box; }
+      .print-header { display:flex; align-items:center; justify-content:space-between; gap:18px; border-bottom:3px solid #C7F36A; padding-bottom:12px; }
+      .print-kicker { margin:0 0 4px; color:#607087; font-size:8pt; font-weight:bold; letter-spacing:2px; }
+      .print-header h1 { margin:0; color:#0B1F3A; font-size:28pt; letter-spacing:1px; }
+      .print-role { margin:4px 0 0; color:#40536B; font-size:10pt; font-weight:bold; }
+      .print-header img { width:27mm; height:27mm; object-fit:cover; border-radius:50%; border:2px solid #C7F36A; }
+      .print-contact { display:flex; flex-wrap:wrap; gap:4px 14px; padding:9px 0; border-bottom:1px solid #dce4ee; color:#40536B; font-size:8pt; }
+      .print-section { margin-top:12px; break-inside:avoid; }
+      .print-section h2 { margin:0 0 7px; padding-bottom:4px; border-bottom:1px solid #dce4ee; color:#0B1F3A; font-size:10pt; letter-spacing:1.2px; }
+      .print-section p { margin:4px 0; }
+      .print-item { position:relative; margin:0 0 8px; break-inside:avoid; }
+      .print-item h3 { display:inline; margin:0; color:#0B1F3A; font-size:9.5pt; }
+      .print-item b { color:#52647a; font-size:8.5pt; }
+      .print-item time { float:right; color:#52647a; font-size:8.5pt; font-weight:bold; }
+      .print-item p { margin:3px 0 0; color:#40536B; }
+      .print-skills { margin:0; padding-left:17px; columns:2; column-gap:25px; }
+      .print-skills li { margin:0 0 4px; break-inside:avoid; }
+      .print-footer { margin-top:14px; padding-top:7px; border-top:1px solid #dce4ee; color:#718096; text-align:center; font-size:7.5pt; }
+    }
+
 </style>
 </head>
 <body>
@@ -1535,6 +1564,7 @@
           <p class="intro">Teknisi dengan pengalaman di bidang servis smartphone, telekomunikasi, serta latar belakang Teknik Kendaraan Ringan. Terbiasa belajar hal baru, bekerja secara teliti, dan menangani permasalahan teknis.</p>
           
           <div class="hero-actions">
+            <button class="button button-accent cv-download-button" type="button" onclick="downloadCV()">↓ Unduh CV PDF</button>
             <a class="button button-dark" onclick="switchTab('pengalaman')">Pengalaman </a>
             <a class="button button-outline" onclick="switchTab('pendidikan')">Pendidikan</a>
             <a class="button button-outline" onclick="switchTab('keahlian')">Keahlian</a>
@@ -1753,6 +1783,44 @@
     </div>
   </main>
 
+  <section id="cv-print-area" aria-hidden="true">
+    <header class="print-header">
+      <div class="print-identity">
+        <p class="print-kicker">CURRICULUM VITAE</p>
+        <h1>ABDUL AZIS</h1>
+        <p class="print-role">Teknisi Otomotif · Elektronik · Jaringan</p>
+      </div>
+      <img src="foto-abdul-azis.jpg" alt="Foto Abdul Azis">
+    </header>
+    <div class="print-contact">
+      <span>Dusun Sindanglaya, Sindangsari, Sukasari, Sumedang, Jawa Barat</span>
+      <span>+62 858-4600-9748</span>
+      <span>abdul.azis0000123@gmail.com</span>
+      <span>Website: cv-abdulazis.web.id</span>
+    </div>
+    <section class="print-section">
+      <h2>PROFIL</h2>
+      <p>Lulusan SMKN Sukasari jurusan Teknik Kendaraan Ringan (TKR), dengan pengalaman kerja di bidang operasional SPBU, servis smartphone, dan teknisi telekomunikasi. Memiliki pengetahuan perbaikan perangkat elektronik dan instalasi jaringan Wi-Fi, serta minat untuk terus mengembangkan kemampuan teknis.</p>
+    </section>
+    <section class="print-section">
+      <h2>PENGALAMAN KERJA</h2>
+      <article class="print-item"><div><h3>Teknisi Telekomunikasi</h3><b>PT. Daya Sinergi Telekomunikasi</b></div><time>2025 — 2026</time><p>Mengelola area POP; mencari wilayah potensial dan pelanggan baru; melakukan instalasi pelanggan, penarikan jalur kabel antar tiang, serta menangani gangguan jaringan MikroTik.</p></article>
+      <article class="print-item"><div><h3>Teknisi Servis Smartphone</h3><b>Smartphone Center</b></div><time>2024 — 2025</time><p>Menangani keluhan pelanggan dan melakukan perbaikan perangkat smartphone dari sisi hardware maupun software.</p></article>
+      <article class="print-item"><div><h3>Operator SPBU</h3><b>SPBU 34.453.04</b></div><time>2023</time><p>Melayani pelanggan sesuai SOP K3, menjaga kebersihan area kerja, serta menghitung dan merapikan uang hasil penjualan.</p></article>
+    </section>
+    <section class="print-section">
+      <h2>PENDIDIKAN & SERTIFIKASI</h2>
+      <article class="print-item"><div><h3>SMKN Sukasari — Teknik Kendaraan Ringan</h3></div></article>
+      <article class="print-item"><div><h3>Pemeliharaan Kendaraan Ringan Sistem Konvensional</h3><b>Sertifikasi BNSP · 260 Jam Pelajaran · 2020</b></div></article>
+      <article class="print-item"><div><h3>Pemeliharaan Kendaraan Ringan Sistem Injeksi</h3><b>Sertifikasi BNSP · 380 Jam Pelajaran · 2023</b></div></article>
+    </section>
+    <section class="print-section">
+      <h2>KEAHLIAN</h2>
+      <ul class="print-skills"><li>Teknik otomotif: pemeliharaan kendaraan ringan sistem konvensional dan injeksi</li><li>Servis elektronik dan smartphone (hardware & software)</li><li>Instalasi jaringan, Wi-Fi, dan troubleshooting MikroTik</li><li>Penggunaan komputer dan pemecahan masalah teknis</li></ul>
+    </section>
+    <p class="print-footer">Abdul Azis · Curriculum Vitae · cv-abdulazis.web.id</p>
+  </section>
+
   <footer>
 <p>© <span id="year"></span> Abdul Azis. Curriculum vitae.</p>
     <a onclick="switchTab('beranda')" style="cursor: pointer;">Kembali ke awal ↑</a>
@@ -1760,6 +1828,10 @@
 
   <script>
 
+
+    function downloadCV() {
+      window.print();
+    }
 
     function toggleNeonSidebar(forceState) {
       const sidebar=document.getElementById('neonSidebar');
