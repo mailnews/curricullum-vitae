@@ -1970,6 +1970,19 @@
         z-index:2147483000 !important;
       }
     }
+  
+    /* FILTER PORTOFOLIO */
+    .portfolio-filter-bar { display:flex; flex-wrap:wrap; gap:9px; margin:0 0 12px; }
+    .portfolio-filter { display:inline-flex; align-items:center; gap:9px; padding:10px 14px; border:1px solid var(--line); border-radius:999px; background:var(--white); color:var(--ink); font:inherit; font-size:11px; font-weight:750; cursor:pointer; transition:background .2s,border-color .2s,color .2s,transform .2s; }
+    .portfolio-filter:hover { transform:translateY(-2px); border-color:var(--lime); }
+    .portfolio-filter span { display:inline-grid; place-items:center; min-width:20px; height:20px; padding:0 5px; border-radius:20px; background:var(--bg); color:var(--muted); font-size:9px; }
+    .portfolio-filter.is-active { background:var(--navy); border-color:var(--navy); color:#fff; box-shadow:0 7px 18px rgba(11,31,58,.16); }
+    .portfolio-filter.is-active span { background:var(--lime); color:var(--navy); }
+    .portfolio-filter:focus-visible { outline:3px solid var(--lime); outline-offset:3px; }
+    .portfolio-filter-status { margin:0 0 18px; color:var(--muted); font-size:10px; }
+    .portfolio-flip.is-filter-hidden { display:none; }
+    @media(max-width:600px) { .portfolio-filter-bar { gap:7px; } .portfolio-filter { padding:9px 11px; font-size:10px; } }
+
   </style>
 </head>
 <body>
@@ -2198,8 +2211,15 @@
           <h2>Bidang <span>pekerjaan.</span></h2>
           <p class="portfolio-intro">Rangkuman pekerjaan teknis dan kompetensi yang pernah saya tangani.</p>
         </div>
+        <div class="portfolio-filter-bar" role="group" aria-label="Filter kategori portofolio">
+          <button class="portfolio-filter is-active" type="button" data-filter="all" aria-pressed="true">Semua <span>03</span></button>
+          <button class="portfolio-filter" type="button" data-filter="network" aria-pressed="false">Telekomunikasi <span>01</span></button>
+          <button class="portfolio-filter" type="button" data-filter="support" aria-pressed="false">Network support <span>01</span></button>
+          <button class="portfolio-filter" type="button" data-filter="device" aria-pressed="false">Elektronik <span>01</span></button>
+        </div>
+        <p class="portfolio-filter-status" id="portfolioFilterStatus" aria-live="polite">Menampilkan 3 bidang pekerjaan</p>
         <div class="portfolio-grid">
-          <article class="portfolio-card portfolio-flip" tabindex="0" role="button" aria-label="Lihat detail instalasi jaringan internet" aria-pressed="false">
+          <article class="portfolio-card portfolio-flip" data-category="network" tabindex="0" role="button" aria-label="Lihat detail instalasi jaringan internet" aria-pressed="false">
             <div class="portfolio-card-inner">
               <div class="portfolio-face portfolio-front">
                 <div class="portfolio-card-top"><span class="portfolio-number">01</span><span class="portfolio-type">TELEKOMUNIKASI</span></div>
@@ -2218,7 +2238,7 @@
               </div>
             </div>
           </article>
-          <article class="portfolio-card portfolio-flip" tabindex="0" role="button" aria-label="Lihat detail troubleshooting jaringan" aria-pressed="false">
+          <article class="portfolio-card portfolio-flip" data-category="support" tabindex="0" role="button" aria-label="Lihat detail troubleshooting jaringan" aria-pressed="false">
             <div class="portfolio-card-inner">
               <div class="portfolio-face portfolio-front">
                 <div class="portfolio-card-top"><span class="portfolio-number">02</span><span class="portfolio-type">NETWORK SUPPORT</span></div>
@@ -2237,7 +2257,7 @@
               </div>
             </div>
           </article>
-          <article class="portfolio-card portfolio-flip" tabindex="0" role="button" aria-label="Lihat detail servis smartphone" aria-pressed="false">
+          <article class="portfolio-card portfolio-flip" data-category="device" tabindex="0" role="button" aria-label="Lihat detail servis smartphone" aria-pressed="false">
             <div class="portfolio-card-inner">
               <div class="portfolio-face portfolio-front">
                 <div class="portfolio-card-top"><span class="portfolio-number">03</span><span class="portfolio-type">ELECTRONICS</span></div>
@@ -2594,6 +2614,35 @@
     }
 
 
-  </script>
+  
+    // Filter kategori portofolio; tetap mendukung kartu flip yang sudah ada.
+    const portfolioFilters = document.querySelectorAll('.portfolio-filter');
+    const portfolioCards = [...document.querySelectorAll('.portfolio-flip[data-category]')];
+    const portfolioFilterStatus = document.getElementById('portfolioFilterStatus');
+    portfolioFilters.forEach(filterButton => {
+      filterButton.addEventListener('click', () => {
+        const selected = filterButton.dataset.filter;
+        let visibleCount = 0;
+        portfolioFilters.forEach(button => {
+          const active = button === filterButton;
+          button.classList.toggle('is-active', active);
+          button.setAttribute('aria-pressed', String(active));
+        });
+        portfolioCards.forEach(card => {
+          const visible = selected === 'all' || card.dataset.category === selected;
+          card.classList.toggle('is-filter-hidden', !visible);
+          if (!visible) {
+            card.classList.remove('is-flipped');
+            card.setAttribute('aria-pressed', 'false');
+          }
+          if (visible) visibleCount++;
+        });
+        if (portfolioFilterStatus) {
+          portfolioFilterStatus.textContent = 'Menampilkan ' + visibleCount + ' bidang pekerjaan';
+        }
+      });
+    });
+
+</script>
 </body>
 </html>
