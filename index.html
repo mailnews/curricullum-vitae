@@ -1720,9 +1720,76 @@
       body::before, .cv-page-progress span { animation:none !important; }
     }
 
+  
+    /* INTRO 3D DAN KARTU PORTOFOLIO FLIP */
+    .cv-intro-loader {
+      position:fixed; inset:0; z-index:2000; display:flex; flex-direction:column;
+      align-items:center; justify-content:center; gap:10px;
+      background:rgba(247,247,244,.96); backdrop-filter:blur(22px);
+      transition:opacity .55s ease, visibility .55s ease;
+    }
+    .cv-intro-loader.is-hidden { opacity:0; visibility:hidden; pointer-events:none; }
+    .cv-loader-orbit {
+      width:104px; height:104px; display:grid; place-items:center; border-radius:50%;
+      border:1px solid rgba(252,167,59,.35); position:relative;
+      box-shadow:0 0 45px rgba(252,167,59,.13), inset 0 0 24px rgba(252,167,59,.10);
+      animation:loaderOrbit 2.8s ease-in-out infinite;
+    }
+    .cv-loader-orbit::before,.cv-loader-orbit::after {
+      content:""; position:absolute; inset:-9px; border:1px solid transparent;
+      border-top-color:var(--accent); border-bottom-color:rgba(252,167,59,.28);
+      border-radius:50%; transform:rotateX(68deg) rotateZ(0deg);
+      animation:loaderSpin 2.1s linear infinite;
+    }
+    .cv-loader-orbit::after { inset:5px; transform:rotateY(68deg); animation-direction:reverse; animation-duration:3s; }
+    .cv-loader-core { width:76px; height:76px; overflow:hidden; border-radius:50%; border:3px solid white; box-shadow:0 8px 24px rgba(0,0,0,.15); }
+    .cv-loader-core img { width:100%; height:100%; object-fit:cover; object-position:center 30%; }
+    .cv-intro-loader p { margin:12px 0 0; font:800 16px Manrope,sans-serif; letter-spacing:.2em; }
+    .cv-intro-loader small { color:var(--muted); font-size:9px; letter-spacing:.2em; }
+    .cv-loader-line { width:112px; height:2px; margin-top:13px; overflow:hidden; background:rgba(22,22,22,.1); }
+    .cv-loader-line i { display:block; width:40%; height:100%; background:var(--accent); animation:loaderProgress 1.1s ease-in-out infinite; }
+    @keyframes loaderSpin { to { transform:rotateX(68deg) rotateZ(360deg); } }
+    @keyframes loaderOrbit { 50% { transform:translateY(-5px) rotateY(12deg); } }
+    @keyframes loaderProgress { from { transform:translateX(-120%); } to { transform:translateX(280%); } }
+
+    .portfolio-flip { padding:0 !important; min-height:370px; cursor:pointer; perspective:1200px; }
+    .portfolio-card-inner { position:relative; width:100%; height:100%; min-height:370px; transform-style:preserve-3d; transition:transform .8s cubic-bezier(.2,.75,.2,1); }
+    .portfolio-flip.is-flipped .portfolio-card-inner { transform:rotateY(180deg); }
+    .portfolio-face {
+      position:absolute; inset:0; min-height:370px; padding:26px;
+      display:flex; flex-direction:column; align-items:flex-start;
+      backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:inherit;
+    }
+    .portfolio-back {
+      transform:rotateY(180deg);
+      background:linear-gradient(145deg,rgba(255,255,255,.97),rgba(252,167,59,.12));
+      justify-content:center; border:1px solid rgba(252,167,59,.24);
+    }
+    .portfolio-back h3 { margin:14px 0 8px; }
+    .portfolio-back p { color:var(--muted); }
+    .portfolio-flip-hint {
+      display:block; margin-top:auto; padding-top:16px; color:#9a641e;
+      font-size:10px; font-weight:700; letter-spacing:.05em;
+    }
+    .portfolio-flip:focus-visible { outline:3px solid var(--accent); outline-offset:5px; }
+    .hero-name-photo { transform-style:preserve-3d; transition:transform .2s ease, box-shadow .3s ease; }
+    @media (max-width:800px) {
+      .portfolio-flip,.portfolio-card-inner,.portfolio-face { min-height:350px; }
+      .portfolio-face { padding:21px; }
+    }
+    @media (prefers-reduced-motion:reduce) {
+      .cv-loader-orbit,.cv-loader-orbit::before,.cv-loader-orbit::after,.cv-loader-line i { animation:none !important; }
+      .portfolio-card-inner { transition:none; }
+    }
+
   </style>
 </head>
 <body>
+  <div class="cv-intro-loader" id="cvIntroLoader" aria-label="Memuat CV Abdul Azis">
+    <div class="cv-loader-orbit"><span class="cv-loader-core"><img src="foto-abdul-azis.jpg" alt=""></span></div>
+    <p>ABDUL AZIS</p><small>PORTFOLIO · CURRICULUM VITAE</small>
+    <span class="cv-loader-line"><i></i></span>
+  </div>
   <div class="cv-page-progress" aria-hidden="true"><span id="cvPageProgressFill"></span></div>
 <aside class="neon-sidebar" id="neonSidebar" aria-label="Navigasi CV">
     <div class="neon-sidebar-top">
@@ -1932,26 +1999,62 @@
           <p class="portfolio-intro">Rangkuman pekerjaan teknis dan kompetensi yang pernah saya tangani.</p>
         </div>
         <div class="portfolio-grid">
-          <article class="portfolio-card">
-            <div class="portfolio-card-top"><span class="portfolio-number">01</span><span class="portfolio-type">TELEKOMUNIKASI</span></div>
-            <div class="portfolio-visual portfolio-network" aria-hidden="true"><span>◎</span><i></i><i></i><i></i></div>
-            <h3>Instalasi jaringan internet</h3>
-            <p>Penarikan jalur kabel antar tiang, instalasi sambungan pelanggan baru, serta pengelolaan area layanan jaringan.</p>
-            <div class="portfolio-tags"><span>Instalasi</span><span>Jaringan</span><span>FTTH</span></div>
+          <article class="portfolio-card portfolio-flip" tabindex="0" role="button" aria-label="Lihat detail instalasi jaringan internet" aria-pressed="false">
+            <div class="portfolio-card-inner">
+              <div class="portfolio-face portfolio-front">
+                <div class="portfolio-card-top"><span class="portfolio-number">01</span><span class="portfolio-type">TELEKOMUNIKASI</span></div>
+                <div class="portfolio-visual portfolio-network" aria-hidden="true"><span>◎</span><i></i><i></i><i></i></div>
+                <h3>Instalasi jaringan internet</h3>
+                <p>Penarikan jalur kabel antar tiang, instalasi sambungan pelanggan baru, serta pengelolaan area layanan jaringan.</p>
+                <div class="portfolio-tags"><span>Instalasi</span><span>Jaringan</span><span>FTTH</span></div>
+                <span class="portfolio-flip-hint">Ketuk untuk detail ↻</span>
+              </div>
+              <div class="portfolio-face portfolio-back">
+                <span class="portfolio-type">RINGKASAN PEKERJAAN · 01</span>
+                <h3>Instalasi & layanan pelanggan</h3>
+                <p>Melakukan penarikan kabel, pemasangan jalur distribusi, instalasi sambungan baru, serta memastikan koneksi pelanggan berjalan baik.</p>
+                <div class="portfolio-tags"><span>Penarikan kabel</span><span>Instalasi pelanggan</span><span>FTTH</span></div>
+                <span class="portfolio-flip-hint">Ketuk untuk kembali ↻</span>
+              </div>
+            </div>
           </article>
-          <article class="portfolio-card">
-            <div class="portfolio-card-top"><span class="portfolio-number">02</span><span class="portfolio-type">NETWORK SUPPORT</span></div>
-            <div class="portfolio-visual portfolio-router" aria-hidden="true"><span>⌁</span><i></i><i></i><i></i></div>
-            <h3>Troubleshooting jaringan</h3>
-            <p>Penanganan gangguan konektivitas dan pemeriksaan konfigurasi jaringan berbasis MikroTik.</p>
-            <div class="portfolio-tags"><span>MikroTik</span><span>Diagnosa</span><span>Wi-Fi</span></div>
+          <article class="portfolio-card portfolio-flip" tabindex="0" role="button" aria-label="Lihat detail troubleshooting jaringan" aria-pressed="false">
+            <div class="portfolio-card-inner">
+              <div class="portfolio-face portfolio-front">
+                <div class="portfolio-card-top"><span class="portfolio-number">02</span><span class="portfolio-type">NETWORK SUPPORT</span></div>
+                <div class="portfolio-visual portfolio-router" aria-hidden="true"><span>⌁</span><i></i><i></i><i></i></div>
+                <h3>Troubleshooting jaringan</h3>
+                <p>Penanganan gangguan konektivitas dan pemeriksaan konfigurasi jaringan berbasis MikroTik.</p>
+                <div class="portfolio-tags"><span>MikroTik</span><span>Diagnosa</span><span>Wi-Fi</span></div>
+                <span class="portfolio-flip-hint">Ketuk untuk detail ↻</span>
+              </div>
+              <div class="portfolio-face portfolio-back">
+                <span class="portfolio-type">RINGKASAN PEKERJAAN · 02</span>
+                <h3>Analisis gangguan koneksi</h3>
+                <p>Memeriksa perangkat jaringan, menelusuri sumber gangguan, mengecek konfigurasi MikroTik, dan membantu memulihkan konektivitas.</p>
+                <div class="portfolio-tags"><span>MikroTik</span><span>Wi-Fi</span><span>Diagnosa</span></div>
+                <span class="portfolio-flip-hint">Ketuk untuk kembali ↻</span>
+              </div>
+            </div>
           </article>
-          <article class="portfolio-card">
-            <div class="portfolio-card-top"><span class="portfolio-number">03</span><span class="portfolio-type">ELECTRONICS</span></div>
-            <div class="portfolio-visual portfolio-device" aria-hidden="true"><span>▯</span><i></i></div>
-            <h3>Servis smartphone</h3>
-            <p>Pemeriksaan keluhan pelanggan serta penanganan permasalahan perangkat dari sisi perangkat keras dan perangkat lunak.</p>
-            <div class="portfolio-tags"><span>Hardware</span><span>Software</span><span>Perbaikan</span></div>
+          <article class="portfolio-card portfolio-flip" tabindex="0" role="button" aria-label="Lihat detail servis smartphone" aria-pressed="false">
+            <div class="portfolio-card-inner">
+              <div class="portfolio-face portfolio-front">
+                <div class="portfolio-card-top"><span class="portfolio-number">03</span><span class="portfolio-type">ELECTRONICS</span></div>
+                <div class="portfolio-visual portfolio-device" aria-hidden="true"><span>▯</span><i></i></div>
+                <h3>Servis smartphone</h3>
+                <p>Pemeriksaan keluhan pelanggan serta penanganan permasalahan perangkat dari sisi perangkat keras dan perangkat lunak.</p>
+                <div class="portfolio-tags"><span>Hardware</span><span>Software</span><span>Perbaikan</span></div>
+                <span class="portfolio-flip-hint">Ketuk untuk detail ↻</span>
+              </div>
+              <div class="portfolio-face portfolio-back">
+                <span class="portfolio-type">RINGKASAN PEKERJAAN · 03</span>
+                <h3>Pemeriksaan & perbaikan</h3>
+                <p>Mengidentifikasi keluhan, memeriksa kondisi perangkat, melakukan penanganan hardware maupun software, dan menguji fungsi setelah perbaikan.</p>
+                <div class="portfolio-tags"><span>Hardware</span><span>Software</span><span>Pengujian</span></div>
+                <span class="portfolio-flip-hint">Ketuk untuk kembali ↻</span>
+              </div>
+            </div>
           </article>
         </div>
         <p class="portfolio-note">Catatan: bagian ini merangkum bidang pekerjaan berdasarkan pengalaman kerja. Foto dokumentasi proyek dapat ditambahkan kemudian.</p>
@@ -2172,6 +2275,43 @@
       }, { passive: true });
     }
     initPremium3D();
+
+    // Intro singkat; konten tetap bisa diakses jika JavaScript atau animasi dibatasi.
+    const cvIntro = document.getElementById('cvIntroLoader');
+    if (cvIntro) {
+      const hideIntro = () => cvIntro.classList.add('is-hidden');
+      window.setTimeout(hideIntro, 1050);
+      cvIntro.addEventListener('click', hideIntro, { once:true });
+      window.addEventListener('pageshow', hideIntro, { once:true });
+    }
+
+    // Kartu portofolio dapat dibalik dengan klik, Enter, atau Space.
+    document.querySelectorAll('.portfolio-flip').forEach(card => {
+      const flip = () => {
+        const active = card.classList.toggle('is-flipped');
+        card.setAttribute('aria-pressed', String(active));
+      };
+      card.addEventListener('click', flip);
+      card.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          flip();
+        }
+      });
+    });
+
+    // Parallax lembut pada foto profil di perangkat dengan pointer.
+    const profilePhoto = document.querySelector('.hero-name-photo');
+    if (profilePhoto && window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
+      profilePhoto.addEventListener('pointermove', event => {
+        const r = profilePhoto.getBoundingClientRect();
+        const x = (event.clientX-r.left)/r.width-.5;
+        const y = (event.clientY-r.top)/r.height-.5;
+        profilePhoto.style.transform = 'perspective(600px) rotateY('+(x*14)+'deg) rotateX('+(-y*12)+'deg) scale(1.04)';
+      });
+      profilePhoto.addEventListener('pointerleave', () => { profilePhoto.style.transform=''; });
+    }
+
 
     // Cahaya mengikuti posisi pointer di desktop; nonaktif di perangkat sentuh.
     if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
