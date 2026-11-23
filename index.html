@@ -1942,6 +1942,27 @@
       .neon-link-label,.neon-sidebar.expanded .neon-link-label { font-size:7px !important; }
     }
 
+
+    /* FIX POSISI DOCK MOBILE: selalu menempel pada viewport, bukan mengikuti konten */
+    @media screen and (max-width:800px) {
+      html, body {
+        transform:none !important;
+        perspective:none !important;
+      }
+      body { overflow-x:clip; }
+      #neonSidebar,
+      #neonSidebar.expanded {
+        position:fixed !important;
+        inset:auto 10px calc(10px + env(safe-area-inset-bottom, 0px)) 10px !important;
+        width:auto !important;
+        max-width:560px !important;
+        margin-left:auto !important;
+        margin-right:auto !important;
+        transform:none !important;
+        animation:none !important;
+        z-index:2147483000 !important;
+      }
+    }
   </style>
 </head>
 <body>
