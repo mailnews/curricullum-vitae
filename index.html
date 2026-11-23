@@ -1622,9 +1622,29 @@
       .hero-card, .education-card, .digital-cert-card, .portfolio-card, .skill { transform: none !important; }
     }
 
+  
+    /* Indikator progres halaman dan navigasi keyboard */
+    .cv-page-progress {
+      position: fixed; inset: 0 0 auto; height: 3px; z-index: 1000;
+      background: rgba(22,22,22,.08); pointer-events: none;
+    }
+    .cv-page-progress span {
+      display: block; width: 16.6667%; height: 100%;
+      background: linear-gradient(90deg, var(--accent), #ffd28e);
+      box-shadow: 0 0 12px rgba(252,167,59,.55);
+      transition: width .55s cubic-bezier(.2,.75,.25,1);
+    }
+    .neon-link:focus-visible, .button:focus-visible {
+      outline: 2px solid var(--accent); outline-offset: 4px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cv-page-progress span { transition: none; }
+    }
+
   </style>
 </head>
 <body>
+  <div class="cv-page-progress" aria-hidden="true"><span id="cvPageProgressFill"></span></div>
 <aside class="neon-sidebar" id="neonSidebar" aria-label="Navigasi CV">
     <div class="neon-sidebar-top">
       <div class="neon-brand"><span class="neon-brand-mark"><img src="foto-abdul-azis.jpg" alt="Foto Abdul Azis"></span><span class="neon-brand-name">ABDUL AZIS<small>PORTFOLIO</small></span></div>
@@ -1961,14 +1981,12 @@
       if(window.matchMedia('(max-width: 800px)').matches) toggleNeonSidebar(false);
     }
 
-    function switchTab(tabId) {
-      const tabs = document.querySelectorAll('.page-tab');
-      tabs.forEach(tab => tab.classList.remove('active'));
-
+    function switchTab(tabId, updateHistory = true) {
+      const tabs = [...document.querySelectorAll('.page-tab')];
       const targetTab = document.getElementById(tabId);
-      if (targetTab) {
-        targetTab.classList.add('active');
-      }
+      if (!targetTab || !targetTab.classList.contains('page-tab')) return;
+
+      tabs.forEach(tab => tab.classList.toggle('active', tab === targetTab));
 
       const navLinks = document.querySelectorAll('.neon-link');
       navLinks.forEach(link => {
@@ -1978,6 +1996,12 @@
         else link.removeAttribute('aria-current');
       });
 
+      const progress = document.getElementById('cvPageProgressFill');
+      if (progress) progress.style.width = ((tabs.indexOf(targetTab) + 1) / tabs.length * 100) + '%';
+
+      if (updateHistory && window.location.hash !== '#' + tabId) {
+        window.history.pushState({ cvTab: tabId }, '', '#' + tabId);
+      }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -2069,6 +2093,37 @@
       }, { passive: true });
     }
     initPremium3D();
+
+    // Sinkronisasi tombol kembali/maju browser, tautan halaman, dan keyboard.
+    window.addEventListener('popstate', () => {
+      const requested = window.location.hash.slice(1);
+      const fallback = document.querySelector('.page-tab.active')?.id || 'beranda';
+      switchTab(requested || 'beranda', false);
+      if (!document.getElementById(requested)) switchTab(fallback, false);
+    });
+
+    document.addEventListener('keydown', event => {
+      if (event.altKey || event.ctrlKey || event.metaKey) return;
+      const target = event.target;
+      if (target && (target.isContentEditable || /INPUT|TEXTAREA|SELECT|BUTTON|A/.test(target.tagName))) return;
+      if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+      const tabs = [...document.querySelectorAll('.page-tab')];
+      const current = tabs.findIndex(tab => tab.classList.contains('active'));
+      const next = current + (event.key === 'ArrowRight' ? 1 : -1);
+      if (next >= 0 && next < tabs.length) {
+        switchTab(tabs[next].id);
+        if (window.matchMedia('(max-width: 800px)').matches) toggleNeonSidebar(false);
+      }
+    });
+
+    // Buka halaman sesuai tautan saat website dimuat.
+    const initialTab = window.location.hash.slice(1);
+    if (initialTab && document.getElementById(initialTab)?.classList.contains('page-tab')) {
+      switchTab(initialTab, false);
+    } else {
+      switchTab('beranda', false);
+    }
+
 
   </script>
 </body>
