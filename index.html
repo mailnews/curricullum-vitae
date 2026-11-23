@@ -1983,6 +1983,15 @@
     .portfolio-flip.is-filter-hidden { display:none; }
     @media(max-width:600px) { .portfolio-filter-bar { gap:7px; } .portfolio-filter { padding:9px 11px; font-size:10px; } }
 
+  
+    /* ICON NAVBAR DARI FILE REPOSITORI */
+    .neon-icon { display:inline-flex; align-items:center; justify-content:center; }
+    .neon-icon img { display:block; width:25px; height:25px; object-fit:contain; flex:0 0 auto; }
+    .neon-link.active .neon-icon img { filter:drop-shadow(0 0 5px rgba(199,243,106,.55)); }
+    @media(max-width:800px) {
+      .neon-icon img { width:23px; height:23px; }
+    }
+
   </style>
 </head>
 <body>
@@ -2012,12 +2021,12 @@
     <div class="neon-search"><span>⌕</span><span class="neon-search-label">Navigasi CV</span></div>
     <div class="neon-menu-caption">MENU</div>
     <nav class="neon-nav" aria-label="Navigasi utama">
-      <a class="neon-link active" href="#beranda" data-tab="beranda" title="Beranda" onclick="selectNeonTab('beranda');return false;"><span class="neon-icon">⌂</span><span class="neon-link-label">Beranda</span><i></i></a>
-      <a class="neon-link" href="#pengalaman" data-tab="pengalaman" title="Pengalaman" onclick="selectNeonTab('pengalaman');return false;"><span class="neon-icon">▣</span><span class="neon-link-label">Pengalaman</span><i></i></a>
-      <a class="neon-link" href="#pendidikan" data-tab="pendidikan" title="Pendidikan" onclick="selectNeonTab('pendidikan');return false;"><span class="neon-icon">⌑</span><span class="neon-link-label">Pendidikan</span><i></i></a>
-      <a class="neon-link" href="#keahlian" data-tab="keahlian" title="Keahlian" onclick="selectNeonTab('keahlian');return false;"><span class="neon-icon">⌁</span><span class="neon-link-label">Keahlian</span><i></i></a>
-      <a class="neon-link" href="#portofolio" data-tab="portofolio" title="Portofolio" onclick="selectNeonTab('portofolio');return false;"><span class="neon-icon">▤</span><span class="neon-link-label">Portofolio</span><i></i></a>
-      <a class="neon-link" href="#kontak" data-tab="kontak" title="Kontak" onclick="selectNeonTab('kontak');return false;"><span class="neon-icon">✉</span><span class="neon-link-label">Kontak</span><i></i></a>
+      <a class="neon-link active" href="#beranda" data-tab="beranda" title="Beranda" onclick="selectNeonTab('beranda');return false;"><span class="neon-icon"><img src="beranda.png" alt="" aria-hidden="true"></span><span class="neon-link-label">Beranda</span><i></i></a>
+      <a class="neon-link" href="#pengalaman" data-tab="pengalaman" title="Pengalaman" onclick="selectNeonTab('pengalaman');return false;"><span class="neon-icon"><img src="pengalaman.png" alt="" aria-hidden="true"></span><span class="neon-link-label">Pengalaman</span><i></i></a>
+      <a class="neon-link" href="#pendidikan" data-tab="pendidikan" title="Pendidikan" onclick="selectNeonTab('pendidikan');return false;"><span class="neon-icon"><img src="pendidikan.png" alt="" aria-hidden="true"></span><span class="neon-link-label">Pendidikan</span><i></i></a>
+      <a class="neon-link" href="#keahlian" data-tab="keahlian" title="Keahlian" onclick="selectNeonTab('keahlian');return false;"><span class="neon-icon"><img src="keahlian.png" alt="" aria-hidden="true"></span><span class="neon-link-label">Keahlian</span><i></i></a>
+      <a class="neon-link" href="#portofolio" data-tab="portofolio" title="Portofolio" onclick="selectNeonTab('portofolio');return false;"><span class="neon-icon"><img src="portofolio.png" alt="" aria-hidden="true"></span><span class="neon-link-label">Portofolio</span><i></i></a>
+      <a class="neon-link" href="#kontak" data-tab="kontak" title="Kontak" onclick="selectNeonTab('kontak');return false;"><span class="neon-icon"><img src="kontak.png" alt="" aria-hidden="true"></span><span class="neon-link-label">Kontak</span><i></i></a>
     </nav>
     <div class="neon-sidebar-bottom"><span class="neon-live-dot"></span><span class="neon-bottom-label">CV ONLINE</span><span class="neon-version">V2.0</span></div>
   </aside>
